@@ -19,8 +19,8 @@
     color: #929292
     font-size: 1.3em
     transition-duration: 150ms
-
-    width: calc( 100% - 60px )
+    overflow: hidden
+    max-width: calc( 100% - 45px )
 
     border-radius: 15px
 
@@ -28,6 +28,9 @@
         cursor: pointer
         color: #d8d8d8
         background: #ffffff1c
+
+    & > label
+        white-space: nowrap
 
 .active
     background: colors.$primary
