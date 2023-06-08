@@ -1,0 +1,39 @@
+@use '../colors'
+
+.root
+    width: 100%
+    margin-top: 20px
+.categoryParent
+    & > label
+        font-size: 2em
+        margin-left: 15px
+        color: #d4d2d2
+        font-weight: 600
+    & > div
+        margin-left: 15px
+
+    margin-bottom: 10px
+
+.routeParent
+    padding: 15px
+    color: #929292
+    font-size: 1.3em
+    transition-duration: 150ms
+
+    width: calc( 100% - 60px )
+
+    border-radius: 15px
+
+    &:hover, & > label:hover
+        cursor: pointer
+        color: #d8d8d8
+        background: #ffffff1c
+
+.active
+    background: colors.$primary
+    color: white
+
+    &:hover, & > label:hover
+        cursor: default
+        color: white
+        background: colors.$primary
