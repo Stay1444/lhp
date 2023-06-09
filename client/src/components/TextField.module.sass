@@ -1,0 +1,21 @@
+@use '../colors'
+    
+.input
+    outline: none
+    background: none
+    border: none
+    color: white
+
+    background-color: colors.$bg2
+
+    border-radius: 5px
+
+    font-size: 1em
+
+    transition-duration: 100ms
+    transition-property: background
+    &:focus
+        outline: 1px solid colors.$primary
+        background: colors.$bg3
+    &:hover
+        background: colors.$bg3
