@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import style from './Sidebar.module.sass'
 
 import { PropsWithChildren } from 'react'
 import { useLocation, useNavigate } from 'react-router';
+import { LanguageContext } from '../context/LanguageContext';
 
 type RouteProps = PropsWithChildren<{
     name: string;
@@ -42,17 +43,21 @@ const Category: React.FC<CategoryProps> = ({ name, path, children }) => {
 }
 
 const Sidebar = () => {
+    const langCtx = useContext(LanguageContext);
+
     return (
         <div className={style.root}>
-            <Category name='Panel' path='/'>
-                <Route name="Inicio" path="/"/>
-                <Route name="Maquinas" path="/machines"/>
-                <Route name="Dominios" path="/domains"/>
+            <Category name={langCtx.getString("sidebar.panel.title")} path='/'>
+                <Route name={langCtx.getString("sidebar.panel.home")} path="/"/>
+                <Route name={langCtx.getString("sidebar.panel.machines")} path="/machines"/>
+                <Route name={langCtx.getString("sidebar.panel.domains")} path="/domains"/>
             </Category>
-            <Category name='Admin' path='/admin'>
-                <Route name="Usuarios" path="/admin/users"/>
-                <Route name="Maquinas" path="/admin/machines"/>
-                <Route name="Dominios" path="/admin/domains"/>
+            <Category name={langCtx.getString("sidebar.admin.title")} path='/admin'>
+                <Route name={langCtx.getString("sidebar.admin.users")} path="/admin/users"/>
+                <Route name={langCtx.getString("sidebar.admin.machines")} path="/admin/machines"/>
+                <Route name={langCtx.getString("sidebar.admin.domains")} path="/admin/domains"/>
+                <Route name={langCtx.getString("sidebar.admin.limits")} path="/admin/limits"/>
+                <Route name={langCtx.getString("sidebar.admin.settings")} path="/admin/settings"/>
             </Category>
         </div>
     )
