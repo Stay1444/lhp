@@ -28,6 +28,16 @@
                     "registered": "Domains"
                 }
             }
+        },
+        "domains": {
+            "title": "Domains",
+            "th": {
+                "name": "Name",
+                "tld": "Top Level Domain",
+                "ip": "IP Address",
+                "fullname": "Full Name",
+                "machine": "Machine"
+            }
         }
     }
 }

@@ -86,6 +86,9 @@ namespace Backend.Migrations
                     b.Property<string>("ContainerId")
                         .HasColumnType("text");
 
+                    b.Property<DateTimeOffset>("CreationDate")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<Guid>("ImageId")
                         .HasColumnType("uuid");
 

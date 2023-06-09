@@ -9,6 +9,7 @@ public class Machine
     public User Owner { get; set; }
 
     public string Name { get; set; }
+    public DateTimeOffset CreationDate { get; set; }
     
     public bool Running { get; set; }
     

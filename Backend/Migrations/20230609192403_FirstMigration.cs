@@ -70,6 +70,7 @@ namespace Backend.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     OwnerId = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
+                    CreationDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     Running = table.Column<bool>(type: "boolean", nullable: false),
                     ImageId = table.Column<Guid>(type: "uuid", nullable: false),
                     ContainerId = table.Column<string>(type: "text", nullable: true)

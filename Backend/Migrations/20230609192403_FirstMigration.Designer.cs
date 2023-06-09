@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Backend.Migrations
 {
     [DbContext(typeof(LHPDatabaseContext))]
-    [Migration("20230609183926_FirstMigration")]
+    [Migration("20230609192403_FirstMigration")]
     partial class FirstMigration
     {
         /// <inheritdoc />
@@ -88,6 +88,9 @@ namespace Backend.Migrations
 
                     b.Property<string>("ContainerId")
                         .HasColumnType("text");
+
+                    b.Property<DateTimeOffset>("CreationDate")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid>("ImageId")
                         .HasColumnType("uuid");
