@@ -15,7 +15,8 @@ const MainLayout = () =>  {
             navigate("/login")
         }
     }, [identity.currentUser, navigate])
-    console.log("render")
+
+    if (identity.currentUser == undefined) return (<label>redirecting</label>)
 
     return (
         <div className={style.parent}>
