@@ -47,7 +47,8 @@ export const LanguageContextProvider = (props: LanguageContextProviderProps) => 
             for(const k of keys) {
                 obj = obj[k];
             }
-    
+            
+            if (obj == null || obj == undefined || obj == "") return "<!MISSING!>"
             return obj;
 
         } catch {
