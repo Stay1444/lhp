@@ -1,8 +1,8 @@
 export default class User {
-    public Id!: string
-    public Token!: string
-    public Admin!: boolean
-    public CreationDate!: Date
-    public LastLoginDate!: Date
-    public Name!: string
+    public id!: string
+    public token!: string
+    public admin!: boolean
+    public creationDate!: Date
+    public lastLoginDate!: Date
+    public name!: string
 }
