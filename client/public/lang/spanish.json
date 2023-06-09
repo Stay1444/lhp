@@ -1,33 +1,53 @@
 {
+    "languages": {
+      "English": "Inglés",
+      "Spanish": "Español"
+    },
     "sidebar": {
-        "panel": {
-            "title": "Panel",
-            "home": "Inicio",
-            "machines": "Máquinas",
-            "domains": "Dominios"
-        },
-        "admin": {
-            "title": "Administrador",
-            "users": "Usuarios",
-            "machines": "Máquinas",
-            "domains": "Dominios",
-            "limits": "Límites",
-            "settings": "Configuración"
-        }
+      "panel": {
+        "title": "Panel",
+        "home": "Inicio",
+        "machines": "Máquinas",
+        "domains": "Dominios"
+      },
+      "admin": {
+        "title": "Administración",
+        "users": "Usuarios",
+        "machines": "Máquinas",
+        "domains": "Dominios",
+        "limits": "Límites",
+        "settings": "Configuración"
+      }
     },
     "pages": {
-        "home": {
-            "cards": {
-                "machines": {
-                    "title": "Máquinas",
-                    "on": "En ejecución",
-                    "off": "Apagadas"
-                },
-                "domains": {
-                    "title": "Dominios",
-                    "registered": "Dominios"
-                }
-            }
+      "home": {
+        "cards": {
+          "machines": {
+            "title": "Máquinas",
+            "on": "En ejecución",
+            "off": "Detenidas"
+          },
+          "domains": {
+            "title": "Dominios",
+            "registered": "Dominios registrados"
+          }
         }
+      },
+      "domains": {
+        "title": "Tus dominios",
+        "th": {
+          "name": "Nombre",
+          "tld": "Dominio de nivel superior",
+          "ip": "Dirección IP",
+          "fullname": "Nombre completo",
+          "machine": "Máquina"
+        },
+        "controls": {
+          "title": "Dominios",
+          "register_domain": "Registrar dominio",
+          "search": "Buscar..."
+        }
+      }
     }
-}
+  }
+  

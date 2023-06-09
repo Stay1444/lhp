@@ -16,7 +16,7 @@ const LanguageButton: React.FC<LanguageButtonProps> = ({lang}) => {
         <label className={style.languageButton} onClick={() => {
             langCtx.setLang(lang)
         }}>
-            <label>{LanguageLogos[lang]}</label>{Language[lang]}
+            <label>{LanguageLogos[lang]}</label>{langCtx.getString(`languages.${Language[lang]}`)}
         </label>
     )
 }
@@ -29,7 +29,7 @@ const LanguageSwitcher = () => {
         <>  <div className={style.parent} onClick={() => {
                 setOpen(x => !x)
             }}>
-                <label className={`${style.selected} ${style.name}`}><label>{LanguageLogos[langCtx.lang]}</label>{Language[langCtx.lang]}</label>
+                <label className={`${style.selected} ${style.name}`}><label>{LanguageLogos[langCtx.lang]}</label>{langCtx.getString(`languages.${Language[langCtx.lang]}`)}</label>
             </div>
 
             {open &&
