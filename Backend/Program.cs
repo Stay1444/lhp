@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddMvcCore(x =>
 {
-    x.ModelBinderProviders.Add(new FromSecurityAttribute());
+    x.ModelBinderProviders.Insert(0, new UserModelBinderProvider());
 });
 builder.Services.AddNpgsql<LHPDatabaseContext>(builder.Configuration["Postgres"] ?? Environment.GetEnvironmentVariable("Postgres"));
 

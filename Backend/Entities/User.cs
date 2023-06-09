@@ -13,4 +13,7 @@ public class User
     public DateTimeOffset LastLoginDate { get; set; }
     
     public string Name { get; set; }
+    
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+    public ICollection<Domain>? Domains { get; set; }
 }

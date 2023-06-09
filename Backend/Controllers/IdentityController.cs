@@ -12,7 +12,7 @@ namespace Backend.Controllers;
 public class IdentityController : Controller
 {
     [HttpGet("me")]
-    public IActionResult GetCurrentUser([FromSecurity] User? user)
+    public IActionResult GetCurrentUser(User? user)
     {
         if (user is null)
         {

@@ -1,20 +1,19 @@
 using Backend.Entities;
 using Backend.Services;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Utils;
 
-public class UserModelBinder : Attribute, IModelBinderProvider
+public class UserModelBinderProvider : IModelBinderProvider
 {
     public IModelBinder? GetBinder(ModelBinderProviderContext context)
     {
-        return context.Metadata?.ModelType == typeof(User) ? new FromSecurityModelBinder() : null;
+        return context.Metadata?.ModelType == typeof(User) ? new UserModelBinder() : null;
     }
 }
 
-public class FromSecurityModelBinder : IModelBinder
+public class UserModelBinder : IModelBinder
 {
     public async Task BindModelAsync(ModelBindingContext bindingContext)
     {
