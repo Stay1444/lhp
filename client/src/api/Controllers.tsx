@@ -1,5 +1,6 @@
 import axios, { AxiosError } from "axios";
 import User from "./User";
+import Domain from "./Domain";
 
 type Token = string;
 
@@ -54,5 +55,22 @@ export class IdentityController {
             }
         }
 
+    }
+}
+
+export class DomainController {
+    public static List = async (): Promise<Domain[] | undefined> => {
+        try {
+
+            const response = await axios.get(url("/api/domain/list"), {
+                headers: {
+                    Authorization: ControllerOptions.Authorization
+                }
+            })
+
+            return response.data as Domain[];
+        } catch {
+            return;
+        }
     }
 }
