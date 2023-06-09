@@ -5,8 +5,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Utils;
 
-[AttributeUsage(AttributeTargets.Method)]
-public class SecureRouteAttribute : ActionFilterAttribute
+[AttributeUsage(AttributeTargets.Method | AttributeTargets.Class)]
+public class SecureRouteAttribute : ActionFilterAttribute, IAsyncAuthorizationFilter
 {
     public bool RequireAdmin { get; }
 
@@ -14,8 +14,8 @@ public class SecureRouteAttribute : ActionFilterAttribute
     {
         this.RequireAdmin = requireAdmin;
     }
-    
-    public override async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
+
+    public async Task OnAuthorizationAsync(AuthorizationFilterContext context)
     {
         var token = context.HttpContext.ExtractToken();
 
@@ -45,7 +45,5 @@ public class SecureRouteAttribute : ActionFilterAttribute
             context.Result = new UnauthorizedResult();
             return;
         }
-        
-        await next();
     }
 }
