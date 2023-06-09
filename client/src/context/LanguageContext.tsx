@@ -32,6 +32,8 @@ export const LanguageContextProvider = (props: LanguageContextProviderProps) => 
             localStorage.setItem("LANGUAGE", Language[lang])
             setState({...state, lang: lang })
             languageSheet = r.data;
+
+            if (loading) setLoading(false)
         });
     }
 
@@ -60,7 +62,7 @@ export const LanguageContextProvider = (props: LanguageContextProviderProps) => 
     }
 
     const [state, setState] = useState<ILanguageContext>(initState);
-
+    const [loading, setLoading] = useState(true);
     useEffect(() => {
         const savedLang = localStorage.getItem("LANGUAGE");
         
@@ -75,6 +77,8 @@ export const LanguageContextProvider = (props: LanguageContextProviderProps) => 
 
         }
     }, []);
+
+    if (loading) return (<></>)
 
     return (
         <LanguageContext.Provider value={state}>
