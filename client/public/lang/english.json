@@ -1,43 +1,52 @@
 {
-    "sidebar": {
-        "panel": {
-            "title": "Panel",
-            "home": "Home",
-            "machines": "Machines",
-            "domains": "Domains"
-        },
-        "admin": {
-            "title": "Admin",
-            "users": "Users",
-            "machines": "Machines",
-            "domains": "Domains",
-            "limits": "Limits",
-            "settings": "Settings"
-        }
+  "languages": {
+    "English": "Inglés",
+    "Spanish": "Español"
+  },
+  "sidebar": {
+    "panel": {
+      "title": "Panel",
+      "home": "Inicio",
+      "machines": "Máquinas",
+      "domains": "Dominios"
     },
-    "pages": {
-        "home": {
-            "cards": {
-                "machines": {
-                    "title": "Machines",
-                    "on": "Running",
-                    "off": "Stopped"
-                },
-                "domains": {
-                    "title": "Domains",
-                    "registered": "Domains"
-                }
-            }
+    "admin": {
+      "title": "Administración",
+      "users": "Usuarios",
+      "machines": "Máquinas",
+      "domains": "Dominios",
+      "limits": "Límites",
+      "settings": "Configuración"
+    }
+  },
+  "pages": {
+    "home": {
+      "cards": {
+        "machines": {
+          "title": "Máquinas",
+          "on": "En ejecución",
+          "off": "Detenidas"
         },
         "domains": {
-            "title": "Domains",
-            "th": {
-                "name": "Name",
-                "tld": "Top Level Domain",
-                "ip": "IP Address",
-                "fullname": "Full Name",
-                "machine": "Machine"
-            }
+          "title": "Dominios",
+          "registered": "Dominios registrados"
         }
+      }
+    },
+    "domains": {
+      "title": "Tus dominios",
+      "th": {
+        "name": "Nombre",
+        "tld": "Dominio de nivel superior",
+        "ip": "Dirección IP",
+        "fullname": "Nombre completo",
+        "machine": "Máquina"
+      },
+      "controls": {
+        "title": "Dominios",
+        "register_domain": "Registrar dominio",
+        "search": "Buscar..."
+      }
     }
+  }
 }
