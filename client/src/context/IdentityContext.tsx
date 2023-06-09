@@ -3,6 +3,7 @@ import React, { PropsWithChildren, useEffect } from "react";
 
 import { useState } from "react";
 import User from "../api/User";
+import { ControllerOptions, IdentityController } from "../api/Controllers";
 
 interface IIdentityContext {
     currentUser: User | undefined,
@@ -21,31 +22,45 @@ export const IdentityContext = React.createContext<IIdentityContext>({
 type IdentityContextProviderProps = PropsWithChildren<unknown>;
 
 export const IdentityContextProvider = (props: IdentityContextProviderProps) => {
-    const logout = () => {
+    const logoutHandler = () => {
         return;
     }
 
-    const login = (token: string) => {
-        return;
+    const loginHandler = (token: string) => {
+        console.log("Fetching user...")
+        ControllerOptions.Authorization = token;
+        IdentityController.Me().then((result) => {
+            if (result != undefined) {
+                setState((prevState) => ({ ...prevState, currentUser: result }));
+                console.log("LOGGED IN")
+                localStorage.setItem("authorization", token)
+                if (loading) setLoading(false);
+            }
+        }).catch((e) => {
+            ControllerOptions.Authorization = undefined;
+            console.log("FAILED TO LOG IN", e)
+        })
     }
 
     const initState: IIdentityContext = {
         currentUser: undefined,
-        logout: logout,
-        login: login
+        logout: logoutHandler,
+        login: loginHandler
     }
 
     const [state, setState] = useState<IIdentityContext>(initState);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-
         const token = localStorage.getItem("authorization");
-
+    
         if (token == undefined) {
-            setLoading(false)
+          setLoading(false);
+        } else {
+          loginHandler(token);
+          setLoading(false);
         }
-    }, []);
+      }, []);
 
     if (loading) return (<></>)
 
