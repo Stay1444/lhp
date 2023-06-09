@@ -1,13 +1,18 @@
 import { Navigate, Route, Routes } from 'react-router';
 import './app.sass'
 import MainLayout from './layouts/MainLayout';
-import HomePage from './pages/user/HomePage';
-import { LanguageContextProvider } from './context/LanguageContext';
+import AdminLayout from './layouts/AdminLayout';
 import LoggedOutLayout from './layouts/LoggedOutLayout';
+
+import { LanguageContextProvider } from './context/LanguageContext';
+import { IdentityContextProvider } from './context/IdentityContext';
+
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
-import { IdentityContextProvider } from './context/IdentityContext';
-import AdminLayout from './layouts/AdminLayout';
+
+import HomePage from './pages/user/HomePage';
+import MachinesPage from './pages/user/MachinesPage';
+import DomainsPage from './pages/user/DomainsPage';
 
 const App = () => {
   return (
@@ -21,8 +26,8 @@ const App = () => {
 
           <Route path='/' element={<MainLayout/>}>
             <Route index element={<HomePage/>}/>
-            <Route path='machines' element={<h1>MACHINES</h1>}/>
-            <Route path='domains' element={<h1>DOMAINS</h1>}/>
+            <Route path='machines' element={<MachinesPage/>}/>
+            <Route path='domains' element={<DomainsPage/>}/>
 
             <Route path='admin' element={<AdminLayout/>}>
               <Route index element={<h1>ADMIN</h1>}/>
