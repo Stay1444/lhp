@@ -16,4 +16,7 @@ public class User
     
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public ICollection<Domain>? Domains { get; set; }
+    
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+    public ICollection<Machine>? Machines { get; set; }
 }
