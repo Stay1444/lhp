@@ -1,0 +1,32 @@
+@use '../../colors'
+    
+.container
+    display: flex
+
+    margin: 75px
+    padding: 50px
+    flex-direction: row
+
+    flex-wrap: wrap
+
+    gap: 50px
+
+.card
+    height: 175px
+    width: 325px
+    border-radius: 15px
+
+    background-color: colors.$bg2
+    box-shadow: 5px 5px 5px #0000008e
+    border: solid 2px colors.$bg3
+    transition-duration: 100ms
+    &:hover, & > *:hover
+        cursor: pointer
+        border-color: colors.$primary
+
+.cardName
+    display: block
+    font-weight: 600
+    font-size: 2em
+    margin: 10px
+    padding: 10px

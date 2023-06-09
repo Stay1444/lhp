@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from 'react-router';
 import './app.sass'
 import MainLayout from './layouts/MainLayout';
+import HomePage from './pages/user/HomePage';
 
 const App = () => {
   return (
@@ -9,7 +10,7 @@ const App = () => {
       <Route path='/register' element={<h1>REGISTER</h1>}/>
 
       <Route path='/' element={<MainLayout/>}>
-        <Route index element={<h1>HOME</h1>}/>
+        <Route index element={<HomePage/>}/>
         <Route path='machines' element={<h1>MACHINES</h1>}/>
         <Route path='domains' element={<h1>DOMAINS</h1>}/>
 
