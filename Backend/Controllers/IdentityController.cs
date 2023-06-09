@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Backend.Controllers;
 
 [ApiController]
-[Route("/identity")]
+[Route("/api/identity")]
 public class IdentityController : Controller
 {
     [HttpGet("me")]
@@ -33,7 +33,7 @@ public class IdentityController : Controller
     public async Task<IActionResult> RegisterAsync([FromServices] LHPDatabaseContext db,
         [FromBody] RegisterRequest registerRequest)
     {
-        if (!registerRequest.Name.IsValidUsername())
+        if (!registerRequest.Name.IsValidUsername() || registerRequest.Name.Length < 3 || registerRequest.Name.Length > 32)
         {
             return BadRequest("Invalid username.");
         }
