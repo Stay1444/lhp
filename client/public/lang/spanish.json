@@ -1,1 +1,33 @@
-{}
+{
+    "sidebar": {
+        "panel": {
+            "title": "Panel",
+            "home": "Inicio",
+            "machines": "Máquinas",
+            "domains": "Dominios"
+        },
+        "admin": {
+            "title": "Administrador",
+            "users": "Usuarios",
+            "machines": "Máquinas",
+            "domains": "Dominios",
+            "limits": "Límites",
+            "settings": "Configuración"
+        }
+    },
+    "pages": {
+        "home": {
+            "cards": {
+                "machines": {
+                    "title": "Máquinas",
+                    "on": "En ejecución",
+                    "off": "Apagadas"
+                },
+                "domains": {
+                    "title": "Dominios",
+                    "registered": "Dominios registrados"
+                }
+            }
+        }
+    }
+}
