@@ -8,8 +8,8 @@ using Microsoft.EntityFrameworkCore;
 namespace Backend.Controllers;
 
 [ApiController]
-[Route("/user")]
-public class UserController : Controller
+[Route("/identity")]
+public class IdentityController : Controller
 {
     [HttpGet("me")]
     public IActionResult GetCurrentUser([FromSecurity] User? user)
