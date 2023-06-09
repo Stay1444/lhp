@@ -20,6 +20,11 @@ const Card: React.FC<CardProps> = ({name, path, children}) => {
             navigate(path);
         }}>
             <label className={style.cardName}>{name}</label>
+
+
+            <div>
+                {children}
+            </div>
         </div>
     )
 }
@@ -27,7 +32,10 @@ const Card: React.FC<CardProps> = ({name, path, children}) => {
 const HomePage = () => {
     return (
         <div className={style.container}>
-            <Card name='Maquinas' path='/machines'/>
+            <Card name='Maquinas' path='/machines'>
+                <label style={{display: 'block', marginBottom: '15px'}}><i className={`${style.ellipse} ${style.green}`}/>5 Encendidas</label>
+                <label style={{display: 'block'}}><i className={`${style.ellipse} ${style.red}`}/>2 Apagadas</label>
+            </Card>
             <Card name='Dominios' path='/domains'/>
         </div>
     )
