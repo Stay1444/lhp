@@ -1,0 +1,50 @@
+@use '../../colors'
+.parent
+    background-color: colors.$bg1
+
+    margin: 50px
+    border-radius: 15px
+    margin-top: 10px
+    background-color: colors.$bg1
+    overflow: hidden
+    outline: colors.$bg2 1px solid
+.controls
+    min-height: 25px
+    display: flex
+    flex-direction: row
+    justify-content: right
+    align-items: center
+    padding: 10px
+    column-gap: 25px
+    .searchField
+        padding: 5px
+        padding-left: 10px
+        padding-right: 10px
+        outline: 2px solid colors.$bg2
+
+    .registerBtn
+        padding-left: 15px
+        padding-right: 15px
+
+    .boxTitle
+        font-size: 1.5em
+        margin-right: auto
+.title
+    margin-top: 50px
+    margin-left: 50px
+
+.table
+    width: 100%
+    overflow: hidden
+.header
+    background-color: colors.$primary
+
+.row
+    transition-duration: 250ms
+
+.row > td
+    padding: 15px
+
+.row:hover
+    background-color: colors.$bg2
+    cursor: pointer
