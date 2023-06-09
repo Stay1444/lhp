@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backend", "Backend\Backend.csproj", "{5C001689-4BA8-478C-8F79-690F0F9FE13B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PfSense", "PfSense\PfSense.csproj", "{8393ED56-A47A-4B8C-B5EB-1B2A8A8A562B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{5C001689-4BA8-478C-8F79-690F0F9FE13B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C001689-4BA8-478C-8F79-690F0F9FE13B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5C001689-4BA8-478C-8F79-690F0F9FE13B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8393ED56-A47A-4B8C-B5EB-1B2A8A8A562B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8393ED56-A47A-4B8C-B5EB-1B2A8A8A562B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8393ED56-A47A-4B8C-B5EB-1B2A8A8A562B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8393ED56-A47A-4B8C-B5EB-1B2A8A8A562B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
