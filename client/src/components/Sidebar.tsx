@@ -4,6 +4,7 @@ import style from './Sidebar.module.sass'
 import { PropsWithChildren } from 'react'
 import { useLocation, useNavigate } from 'react-router';
 import { LanguageContext } from '../context/LanguageContext';
+import { IdentityContext } from '../context/IdentityContext';
 
 type RouteProps = PropsWithChildren<{
     name: string;
@@ -44,6 +45,7 @@ const Category: React.FC<CategoryProps> = ({ name, path, children }) => {
 
 const Sidebar = () => {
     const langCtx = useContext(LanguageContext);
+    const identity = useContext(IdentityContext);
 
     return (
         <div className={style.root}>
@@ -52,13 +54,16 @@ const Sidebar = () => {
                 <Route name={langCtx.getString("sidebar.panel.machines")} path="/machines"/>
                 <Route name={langCtx.getString("sidebar.panel.domains")} path="/domains"/>
             </Category>
-            <Category name={langCtx.getString("sidebar.admin.title")} path='/admin'>
-                <Route name={langCtx.getString("sidebar.admin.users")} path="/admin/users"/>
-                <Route name={langCtx.getString("sidebar.admin.machines")} path="/admin/machines"/>
-                <Route name={langCtx.getString("sidebar.admin.domains")} path="/admin/domains"/>
-                <Route name={langCtx.getString("sidebar.admin.limits")} path="/admin/limits"/>
-                <Route name={langCtx.getString("sidebar.admin.settings")} path="/admin/settings"/>
-            </Category>
+            { identity.currentUser?.admin && 
+                <Category name={langCtx.getString("sidebar.admin.title")} path='/admin'>
+                    <Route name={langCtx.getString("sidebar.admin.users")} path="/admin/users"/>
+                    <Route name={langCtx.getString("sidebar.admin.machines")} path="/admin/machines"/>
+                    <Route name={langCtx.getString("sidebar.admin.domains")} path="/admin/domains"/>
+                    <Route name={langCtx.getString("sidebar.admin.limits")} path="/admin/limits"/>
+                    <Route name={langCtx.getString("sidebar.admin.settings")} path="/admin/settings"/>
+                </Category>
+            }
+            
         </div>
     )
 }
