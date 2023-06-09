@@ -1,7 +1,9 @@
-import { PropsWithChildren, useContext } from 'react';
+import { PropsWithChildren, useContext, useEffect, useState } from 'react';
 import style from './HomePage.module.sass'
 import { useLocation, useNavigate } from 'react-router';
 import { LanguageContext } from '../../context/LanguageContext';
+import Domain from '../../api/Domain';
+import { DomainController } from '../../api/Controllers';
 
 type CardProps = PropsWithChildren<{
     name: string;
@@ -33,6 +35,18 @@ const Card: React.FC<CardProps> = ({name, path, children}) => {
 const HomePage = () => {
     const langCtx = useContext(LanguageContext);
 
+    const [domains, setDomains] = useState<Domain[] | undefined>(undefined);
+
+    useEffect(() => {
+
+        DomainController.List().then((r) => {
+            if (r != undefined) {
+                setDomains(r)
+            }
+        });
+
+    }, []);
+
     return (
         <div className={style.container}>
             <Card name={langCtx.getString("pages.home.cards.machines.title")} path='/machines'>
@@ -40,7 +54,7 @@ const HomePage = () => {
                 <label style={{display: 'block'}}><i className={`${style.ellipse} ${style.red}`}/>2 {langCtx.getString("pages.home.cards.machines.off")}</label>
             </Card>
             <Card name={langCtx.getString("pages.home.cards.domains.title")} path='/domains'>
-                <label style={{display: 'block', marginBottom: '15px'}}><i className={`${style.ellipse} ${style.primary}`}/>5 {langCtx.getString("pages.home.cards.domains.registered")}</label>
+                <label style={{display: 'block', marginBottom: '15px'}}><i className={`${style.ellipse} ${style.primary}`}/>{domains?.length ?? 0} {langCtx.getString("pages.home.cards.domains.registered")}</label>
             </Card>
         </div>
     )
