@@ -1,0 +1,63 @@
+@use '../colors'
+
+.button
+    outline: none
+    background: none
+    border: none
+
+    color: white
+    font-size: 1em
+
+    padding: 5px
+
+    border-radius: 5px
+
+    transition-property: background
+    transition-duration: 150ms
+
+    &.enabled
+        &:hover, & *:hover
+            cursor: pointer
+        &:focus
+            outline: 1px solid colors.$primary
+    &.disabled
+        &:hover, & *:hover
+            cursor: not-allowed
+
+
+    &.secondary
+        background-color: colors.$bg2
+
+        &.enabled
+            &:hover, & *:hover, &:focus
+                background-color: colors.$bg3
+        &.disabled
+            background-color: rgba(colors.$bg2, 0.6)
+
+    &.primary
+        background-color: colors.$primary
+
+        &.enabled
+            &:hover, & *:hover, &:focus
+                background-color: colors.$primary1
+        &.disabled
+            background-color: rgba(colors.$primary, 0.6)
+
+    &.danger
+        background-color: colors.$danger
+        color: black
+        &.enabled
+            &:hover, & *:hover, &:focus
+                background-color: colors.$danger1
+        &.disabled
+            background-color: rgba(colors.$danger, 0.6)
+
+    &.success
+        background-color: colors.$success
+        color: black
+
+        &.enabled
+            &:hover, & *:hover, &:focus
+                background-color: colors.$success1
+        &.disabled
+            background-color: rgba(colors.$success, 0.6)
