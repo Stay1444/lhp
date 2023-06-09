@@ -29,6 +29,7 @@ let languageSheet: any = {}
 export const LanguageContextProvider = (props: LanguageContextProviderProps) => {
     const setLang = (lang: Language) => {
         axios.get(`lang/${Language[lang].toLowerCase()}.json`).then((r) => {
+            localStorage.setItem("LANGUAGE", Language[lang])
             setState({...state, lang: lang })
             languageSheet = r.data;
         });
