@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Backend.Migrations
 {
     [DbContext(typeof(LHPDatabaseContext))]
-    [Migration("20230609182746_MachinesAndImages")]
-    partial class MachinesAndImages
+    [Migration("20230609183926_FirstMigration")]
+    partial class FirstMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -67,9 +67,9 @@ namespace Backend.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string[]>("ExposedPorts")
+                    b.Property<int[]>("ExposedPorts")
                         .IsRequired()
-                        .HasColumnType("text[]");
+                        .HasColumnType("integer[]");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -99,8 +99,8 @@ namespace Backend.Migrations
                     b.Property<Guid>("OwnerId")
                         .HasColumnType("uuid");
 
-                    b.Property<int>("State")
-                        .HasColumnType("integer");
+                    b.Property<bool>("Running")
+                        .HasColumnType("boolean");
 
                     b.HasKey("Id");
 

@@ -64,9 +64,9 @@ namespace Backend.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string[]>("ExposedPorts")
+                    b.Property<int[]>("ExposedPorts")
                         .IsRequired()
-                        .HasColumnType("text[]");
+                        .HasColumnType("integer[]");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -96,8 +96,8 @@ namespace Backend.Migrations
                     b.Property<Guid>("OwnerId")
                         .HasColumnType("uuid");
 
-                    b.Property<int>("State")
-                        .HasColumnType("integer");
+                    b.Property<bool>("Running")
+                        .HasColumnType("boolean");
 
                     b.HasKey("Id");
 

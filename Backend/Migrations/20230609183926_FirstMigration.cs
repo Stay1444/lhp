@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Backend.Migrations
 {
     /// <inheritdoc />
-    public partial class MachinesAndImages : Migration
+    public partial class FirstMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -19,7 +19,7 @@ namespace Backend.Migrations
                     Name = table.Column<string>(type: "text", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: false),
                     DockerImage = table.Column<string>(type: "text", nullable: false),
-                    ExposedPorts = table.Column<string[]>(type: "text[]", nullable: false)
+                    ExposedPorts = table.Column<int[]>(type: "integer[]", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -70,7 +70,7 @@ namespace Backend.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     OwnerId = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
-                    State = table.Column<int>(type: "integer", nullable: false),
+                    Running = table.Column<bool>(type: "boolean", nullable: false),
                     ImageId = table.Column<Guid>(type: "uuid", nullable: false),
                     ContainerId = table.Column<string>(type: "text", nullable: true)
                 },

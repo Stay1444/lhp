@@ -6,5 +6,5 @@ public class Image
     public string Name { get; set; }
     public string Description { get; set; }
     public string DockerImage { get; set; }
-    public string[] ExposedPorts { get; set; }
+    public int[] ExposedPorts { get; set; }
 }

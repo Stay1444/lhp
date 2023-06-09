@@ -1,5 +1,8 @@
 using Backend.Entities;
+using Backend.Services;
+using Backend.Utils;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace Backend.Controllers;
@@ -9,8 +12,11 @@ namespace Backend.Controllers;
 public class MachineController : Controller
 {
     [HttpGet("list")]
-    public async Task<IActionResult> ListAsync(User user)
+    [SecureRoute]
+    public async Task<IActionResult> ListAsync(User user, [FromServices] LHPDatabaseContext db)
     {
-        return Ok(Guid.NewGuid());
+        var machines = await db.Machines.Where(x => x.Owner.Id == user.Id).ToListAsync();
+
+        return Ok(machines);
     }
 }

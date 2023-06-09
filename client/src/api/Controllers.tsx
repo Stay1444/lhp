@@ -1,6 +1,7 @@
 import axios, { AxiosError } from "axios";
 import User from "./User";
 import Domain from "./Domain";
+import Machine from "./Machine";
 
 type Token = string;
 
@@ -69,6 +70,22 @@ export class DomainController {
             })
 
             return response.data as Domain[];
+        } catch {
+            return;
+        }
+    }
+}
+
+export class MachineController {
+    public static List = async (): Promise<Machine[] | undefined> => {
+        try {
+            const response = await axios.get(url("/api/machine/list"), {
+                headers: {
+                    Authorization: ControllerOptions.Authorization
+                }
+            })
+
+            return response.data as Machine[]
         } catch {
             return;
         }
