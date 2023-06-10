@@ -1,0 +1,52 @@
+@use '../../colors'
+.title
+    margin-top: 50px
+    margin-left: 50px
+
+.parent
+    background-color: colors.$bg1
+
+    margin: 50px
+    border-radius: 15px
+    margin-top: 10px
+    background-color: colors.$bg1
+    overflow: hidden
+    outline: colors.$bg2 1px solid
+
+    display: flex
+    flex-direction: column
+    row-gap: 15px
+    padding: 25px
+
+.controlContainer
+    display: flex
+    flex-direction: column
+    row-gap: 30px
+    margin-bottom: 20px
+    .controlTitle
+        font-size: 1.4em
+
+    
+    & > div
+        display: flex
+        flex-direction: row
+        column-gap: 15px
+        align-items: center
+
+.textInput
+    padding: 10px
+    padding-left: 15px
+    padding-right: 25px
+
+.error
+    padding: 10px
+    padding-left: 20px
+    padding-right: 20px
+    background-color: colors.$danger
+    border-radius: 15px
+
+.submit
+    margin-left: auto
+    margin-top: auto
+    padding-left: 20px
+    padding-right: 20px
