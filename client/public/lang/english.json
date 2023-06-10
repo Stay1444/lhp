@@ -49,6 +49,9 @@
                 "search": "Search..."
             
             }
+        },
+        "register_domain": {
+            "title": "Register Domain"
         }
     }
 }
