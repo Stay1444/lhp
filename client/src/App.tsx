@@ -26,8 +26,14 @@ const App = () => {
 
           <Route path='/' element={<MainLayout/>}>
             <Route index element={<HomePage/>}/>
+            
             <Route path='machines' element={<MachinesPage/>}/>
-            <Route path='domains' element={<DomainsPage/>}/>
+            
+            <Route path='domains'>
+              <Route index element={<DomainsPage/>}/>
+              <Route path='register' element={<h1>REGISTERING DOMAIN</h1>}/>
+              <Route path=':id' element={<h1>VIEWING DOMAIN WITH ID</h1>}/>
+            </Route>
 
             <Route path='admin' element={<AdminLayout/>}>
               <Route index element={<h1>ADMIN</h1>}/>
