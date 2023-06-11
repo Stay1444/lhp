@@ -1,4 +1,3 @@
 export default class ApiError {
-    public code!: number;
-    public message!: string;
+    constructor(public code: number, public message: string) {}
 }

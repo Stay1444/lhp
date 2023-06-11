@@ -47,7 +47,25 @@
           "register_domain": "Registrar dominio",
           "search": "Buscar..."
         }
-      }
+      },
+        "register_domain": {
+            "title": "Registrar Dominio",
+            "labels": {
+                "domain": "Dominio",
+                "target": "Objetivo",
+                "machines": "Máquinas",
+                "target_ip": "IP Objetivo"
+            },
+            "controls": {
+                "advanced": "Avanzado",
+                "simple": "Simple",
+                "register": "Registrar"
+            },
+            "examples": {
+                "host": "ejemplo",
+                "tld": "es"
+            }
+        }
     }
   }
   

@@ -2,6 +2,7 @@ import axios, { AxiosError } from "axios";
 import User from "./User";
 import Domain from "./Domain";
 import Machine from "./Machine";
+import ApiError from "./ApiError";
 
 type Token = string;
 
@@ -71,6 +72,52 @@ export class DomainController {
 
             return response.data as Domain[];
         } catch {
+            return;
+        }
+    }
+
+    public static Check = async (domain: string, tld: string): Promise<boolean | ApiError | undefined> => {
+        try {
+            
+            const response = await axios.post(url("/api/domain/check"), {
+                domain,
+                tld                
+            }, 
+            {
+                headers: {
+                    Authorization: ControllerOptions.Authorization
+                }
+            })
+
+            if (response.status == 200) return true;
+            return false;
+        } catch (error) {
+            if (error instanceof AxiosError && error.response != undefined) {
+                const apiError = error.response.data as ApiError;
+                return new ApiError(apiError.code, apiError.message);
+            }
+
+            return;
+        }
+    }
+
+    public static Register = async (domain: string, tld: string, target: string): Promise<Domain | ApiError | undefined> => {
+        try {
+            const response = await axios.post(url("/api/domain/register"), {
+                domain,
+                tld,
+                target
+            }, { headers: { Authorization: ControllerOptions.Authorization} })
+
+            if (response.status == 200) return response.data as Domain;
+            return undefined;
+            
+        } catch (error) {
+            if (error instanceof AxiosError && error.response != undefined) {
+                const apiError = error.response.data as ApiError;
+                return new ApiError(apiError.code, apiError.message);
+            }
+
             return;
         }
     }

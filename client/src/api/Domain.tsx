@@ -3,8 +3,4 @@ export default class Domain {
     public host!: string
     public tld!: string
     public target!: string
-
-    public fullDomain() {
-        return `${this.host}.${this.tld}`
-    }
 }

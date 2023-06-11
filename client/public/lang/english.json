@@ -51,7 +51,22 @@
             }
         },
         "register_domain": {
-            "title": "Register Domain"
+            "title": "Register Domain",
+            "labels": {
+                "domain": "Domain",
+                "target": "Target",
+                "machines": "Machines",
+                "target_ip": "Target IP"
+            },
+            "controls": {
+                "advanced": "Advanced",
+                "simple": "Simple",
+                "register": "Register"
+            },
+            "examples": {
+                "host": "example",
+                "tld": "com"
+            }
         }
     }
 }

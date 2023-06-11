@@ -57,13 +57,20 @@ const HomePage = () => {
 
     return (
         <div className={style.container}>
-            <Card name={langCtx.getString("pages.home.cards.machines.title")} path='/machines'>
+            { 
+                machines && <Card name={langCtx.getString("pages.home.cards.machines.title")} path='/machines'>
                 <label style={{display: 'block', marginBottom: '15px'}}><i className={`${style.ellipse} ${style.green}`}/>{machines?.filter(x => x.running).length} {langCtx.getString("pages.home.cards.machines.on")}</label>
                 <label style={{display: 'block'}}><i className={`${style.ellipse} ${style.red}`}/>{machines?.filter(x => !x.running).length} {langCtx.getString("pages.home.cards.machines.off")}</label>
             </Card>
-            <Card name={langCtx.getString("pages.home.cards.domains.title")} path='/domains'>
+            }
+
+            {
+                domains && <Card name={langCtx.getString("pages.home.cards.domains.title")} path='/domains'>
                 <label style={{display: 'block', marginBottom: '15px'}}><i className={`${style.ellipse} ${style.primary}`}/>{domains?.length ?? 0} {langCtx.getString("pages.home.cards.domains.registered")}</label>
             </Card>
+            }
+            
+            
         </div>
     )
 }

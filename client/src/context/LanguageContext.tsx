@@ -48,11 +48,11 @@ export const LanguageContextProvider = (props: LanguageContextProviderProps) => 
                 obj = obj[k];
             }
             
-            if (obj == null || obj == undefined || obj == "") return "<!MISSING!>"
+            if (obj == null || obj == undefined || obj == "") return key;
             return obj;
 
         } catch {
-            return "<!MISSING!>"
+            return key;
         }
     }
 

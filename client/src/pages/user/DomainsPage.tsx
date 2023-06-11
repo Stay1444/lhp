@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { LanguageContext } from "../../context/LanguageContext";
 
 import style from "./DomainsPage.module.sass"
@@ -8,28 +8,30 @@ import Button from "../../components/Button";
 import { TbPlaylistAdd } from "react-icons/tb";
 import Domain from "../../api/Domain";
 import { useNavigate } from "react-router";
+import { DomainController } from "../../api/Controllers";
 
 const DomainsPage = () => {
     const lang = useContext(LanguageContext);
     const navigate = useNavigate();
 
     const [query, setQuery] = useState<string | undefined>(undefined);
-    const [domains, setDomains] = useState<Domain[]>([]);
+    const [domains, setDomains] = useState<Domain[] | undefined>(undefined);
 
-    if (domains.length < 1) {
-        const d = new Domain();
-        d.id = "a"
-        d.host = "davinci"
-        d.tld = "com"
-        d.target = "10.0.0.5"
-        setDomains([...domains, d])
-    }
+    useEffect(() => {
+
+        DomainController.List().then((r) => {
+            if (r != undefined) {
+                setDomains(r);
+            }
+        })
+
+    }, [])
 
     const queryItem = (item: Domain): Domain | undefined => {
         if (query == undefined || query == "") return item;
 
         if (
-            item.fullDomain().toLowerCase().includes(query.toLowerCase()) ||
+            `${item.host}.${item.tld}`.toLowerCase().includes(query.toLowerCase()) ||
             item.target.toLowerCase().includes(query.toLowerCase())
         )
         {
@@ -38,6 +40,8 @@ const DomainsPage = () => {
 
         return;
     }
+
+    if (domains == undefined) return (<></>)
 
     return (
         <>
@@ -77,7 +81,7 @@ const DomainsPage = () => {
                                 return  <tr className={style.row} key={i} onClick={() => {
                                     navigate(`/domains/${v.id}`)
                                 }}>
-                                            <td>{v.fullDomain()}</td>
+                                            <td>{v.host}.{v.tld}</td>
                                             <td>{v.host}</td>
                                             <td>{v.tld}</td>
                                             <td>{v.target}</td>

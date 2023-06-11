@@ -4,27 +4,27 @@ import style from "./Select.module.sass"
 
 type SelectProps = PropsWithChildren<{
     className?: string,
-    disabled?: boolean
+    disabled?: boolean,
+    currentValue?: string
 }>;
 
 type OptionProps = PropsWithChildren<{
     value: string,
-    selected?: boolean,
     label?: string,
     className?: string
 }>;
 
-const Select: React.FC<SelectProps> = ({className, disabled = false, children}) => {
+const Select: React.FC<SelectProps> = ({className, disabled = false, children, currentValue}) => {
     return (
-        <select className={`${style.select} ${className}`} disabled={disabled}>
+        <select className={`${style.select} ${className}`} disabled={disabled} defaultValue={currentValue}>
             {children}
         </select>
     )
 }
 
-const Option: React.FC<OptionProps> = ({value, selected = false, label, className, children}) => {
+const Option: React.FC<OptionProps> = ({value, label, className, children}) => {
     return (
-        <option className={`${style.option} ${className}`} value={value} selected={selected}>{children}{label}</option>
+        <option className={`${style.option} ${className}`} value={value}>{children}{label}</option>
     )
 }
 
