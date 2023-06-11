@@ -1,5 +1,6 @@
 import { Navigate, Route, Routes } from 'react-router';
 import './app.sass'
+
 import MainLayout from './layouts/MainLayout';
 import AdminLayout from './layouts/AdminLayout';
 import LoggedOutLayout from './layouts/LoggedOutLayout';
@@ -13,6 +14,8 @@ import RegisterPage from './pages/RegisterPage';
 import HomePage from './pages/user/HomePage';
 import MachinesPage from './pages/user/MachinesPage';
 import DomainsPage from './pages/user/DomainsPage';
+import RegisterDomainPage from './pages/user/RegisterDomainPage';
+
 
 const App = () => {
   return (
@@ -31,7 +34,7 @@ const App = () => {
             
             <Route path='domains'>
               <Route index element={<DomainsPage/>}/>
-              <Route path='register' element={<h1>REGISTERING DOMAIN</h1>}/>
+              <Route path='register' element={<RegisterDomainPage/>}/>
               <Route path=':id' element={<h1>VIEWING DOMAIN WITH ID</h1>}/>
             </Route>
 
