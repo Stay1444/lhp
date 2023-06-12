@@ -12,7 +12,17 @@ services:
       lhp:
     environment:
       POSTGRES_PASSWORD: "root"
-
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    user: root
+    ports:
+      - "5532:80"
+    networks:
+      lhp:
+    environment:
+      "PGADMIN_DEFAULT_EMAIL": "dev@dev.dev"
+      "PGADMIN_DEFAULT_PASSWORD": "dev"
+  
   lhp-backend:
     restart: on-failure
     depends_on:
