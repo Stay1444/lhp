@@ -60,7 +60,10 @@ public class DomainController : Controller
             }
         }
 
-        await pfSenseClient.HostOverrideApply();
+        _ = Task.Run(async () =>
+        {
+            await pfSenseClient.HostOverrideApply();
+        });
         
         await db.SaveChangesAsync();
         
