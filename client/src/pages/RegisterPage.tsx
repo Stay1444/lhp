@@ -5,7 +5,6 @@ import style from "./RegisterPage.module.sass"
 import { IdentityContext } from "../context/IdentityContext";
 import { IdentityController } from "../api/Controllers";
 import { Link } from "react-router-dom";
-import { AxiosError } from "axios";
 
 const RegisterPage = () => {
     const identity = useContext(IdentityContext);

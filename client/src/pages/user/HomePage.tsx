@@ -5,6 +5,7 @@ import { LanguageContext } from '../../context/LanguageContext';
 import Domain from '../../api/Domain';
 import { DomainController, MachineController } from '../../api/Controllers';
 import Machine from '../../api/Machine';
+import MachineState from '../../api/MachineStatus';
 
 type CardProps = PropsWithChildren<{
     name: string;
@@ -38,7 +39,7 @@ const HomePage = () => {
 
     const [domains, setDomains] = useState<Domain[] | undefined>(undefined);
     const [machines, setMachines] = useState<Machine[] | undefined>(undefined);
-
+    const [machineStates, setMachineStates] = useState<MachineState[] | undefined>(undefined);
     useEffect(() => {
 
         DomainController.List().then((r) => {
@@ -50,6 +51,15 @@ const HomePage = () => {
         MachineController.List().then((r) => {
             if (r != undefined) {
                 setMachines(r)
+
+                const promises = []
+                for(const machine of r) {
+                    promises.push(MachineController.GetStatus(machine.id));
+                }
+    
+                Promise.all(promises).then(result => {
+                    setMachineStates([...result]);
+                })
             }
         })
 
@@ -59,8 +69,8 @@ const HomePage = () => {
         <div className={style.container}>
             { 
                 machines && <Card name={langCtx.getString("pages.home.cards.machines.title")} path='/machines'>
-                <label style={{display: 'block', marginBottom: '15px'}}><i className={`${style.ellipse} ${style.green}`}/>{machines?.filter(x => x.running).length} {langCtx.getString("pages.home.cards.machines.on")}</label>
-                <label style={{display: 'block'}}><i className={`${style.ellipse} ${style.red}`}/>{machines?.filter(x => !x.running).length} {langCtx.getString("pages.home.cards.machines.off")}</label>
+                <label style={{display: 'block', marginBottom: '15px'}}><i className={`${style.ellipse} ${style.green}`}/>{machineStates?.filter(x => x.status != "running").length} {langCtx.getString("pages.home.cards.machines.on")}</label>
+                <label style={{display: 'block'}}><i className={`${style.ellipse} ${style.red}`}/>{machineStates?.filter(x => x.status == "running").length} {langCtx.getString("pages.home.cards.machines.off")}</label>
             </Card>
             }
 

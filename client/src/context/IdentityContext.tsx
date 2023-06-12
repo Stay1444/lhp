@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { PropsWithChildren, useEffect } from "react";
 
 import { useState } from "react";

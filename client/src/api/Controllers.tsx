@@ -14,7 +14,7 @@ export class ControllerOptions {
 
 
 const url = (path: string) => {
-    return "http://localhost:5000" + path;
+    return "" + path;
 }
 
 export class IdentityController {

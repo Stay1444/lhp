@@ -1,0 +1,46 @@
+version: "3.8"
+
+x-common: &x-common
+  POSTGRES_HOST: "postgres"
+  POSTGRES_USERNAME: "postgres"
+  POSTGRES_PASSWORD: "root"
+
+services:
+  postgres:
+    image: postgres:latest
+    networks:
+      lhp:
+    environment:
+      POSTGRES_PASSWORD: "root"
+
+  lhp-backend:
+    restart: on-failure
+    depends_on:
+      - postgres
+    build:
+      context: ./
+      dockerfile: Backend/Dockerfile
+    networks:
+      lhp:
+    volumes:
+      - /var/lib/docker.sock:/var/lib/docker.sock
+    environment:
+      <<: *x-common
+      Postgres: "User ID=postgres;Password=root;Host=postgres;Port=5432;Database=lhp"
+      PF_ADDRESS: "https://10.0.0.1/"
+      PF_CID: "61646d696e"
+      PF_TOKEN: "cf17a6e9a0db2da4a970e3301b555c8e"
+  lhp-frontend:
+    restart: on-failure
+    depends_on:
+      - lhp-backend
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    networks:
+      lhp:
+    ports:
+      - 180:80
+        
+networks:
+  lhp:

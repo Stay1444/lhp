@@ -29,10 +29,9 @@ const Route: React.FC<RouteProps> = ({ name, path }) =>  {
 
 type CategoryProps = PropsWithChildren<{
     name: string;
-    path: string;
 }>;
   
-const Category: React.FC<CategoryProps> = ({ name, path, children }) => {
+const Category: React.FC<CategoryProps> = ({ name, children }) => {
     return (
         <div className={style.categoryParent}>
             <label>{name}</label>
@@ -49,13 +48,13 @@ const Sidebar = () => {
 
     return (
         <div className={style.root}>
-            <Category name={langCtx.getString("sidebar.panel.title")} path='/'>
+            <Category name={langCtx.getString("sidebar.panel.title")}>
                 <Route name={langCtx.getString("sidebar.panel.home")} path="/"/>
                 <Route name={langCtx.getString("sidebar.panel.machines")} path="/machines"/>
                 <Route name={langCtx.getString("sidebar.panel.domains")} path="/domains"/>
             </Category>
             { identity.currentUser?.admin && 
-                <Category name={langCtx.getString("sidebar.admin.title")} path='/admin'>
+                <Category name={langCtx.getString("sidebar.admin.title")}>
                     <Route name={langCtx.getString("sidebar.admin.users")} path="/admin/users"/>
                     <Route name={langCtx.getString("sidebar.admin.machines")} path="/admin/machines"/>
                     <Route name={langCtx.getString("sidebar.admin.domains")} path="/admin/domains"/>

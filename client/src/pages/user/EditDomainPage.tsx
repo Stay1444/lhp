@@ -58,7 +58,7 @@ const EditDomainPage = () => {
                         { !advancedTargetMode && <>
                             <label>{lang.getString("pages.edit_domain.labels.machines")}</label>
                             <Select currentValue={machines?.find(x => x.address == domain.target)?.address} onSelect={x => setTarget(x)}>
-                                { machines != undefined && machines.map((v, i) => {
+                                { machines != undefined && machines.map((v) => {
                                     return <Option value={v.address} label={`${v.name} - ${v.address}`}/>
                                 })}
                             </Select>

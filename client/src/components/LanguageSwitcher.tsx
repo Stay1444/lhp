@@ -36,9 +36,9 @@ const LanguageSwitcher = () => {
                 <div className={style.modalParent} onClick={() => setOpen(false)}>
                     <div className={`${style.modal}`}>
                         {
-                            Object.keys(Language).filter(key => !isNaN(Number(Language[key]))).map((v, i) => {
-                                if (Language[v] == langCtx.lang) return null;
-                                return <LanguageButton lang={Language[v]} key={i}/>
+                            Object.keys(Language).filter((key) => !isNaN(Number(Language[key as keyof typeof Language]))).map((v, i) => {
+                                if (Language[v as keyof typeof Language] === langCtx.lang) return null;
+                                return <LanguageButton lang={Language[v as keyof typeof Language]} key={i}/>
                             })
                         }
                     </div>

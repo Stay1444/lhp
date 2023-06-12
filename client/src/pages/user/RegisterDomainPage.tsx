@@ -94,7 +94,7 @@ const RegisterDomainPage = () => {
                         { !advancedTargetMode && <>
                             <label>{lang.getString("pages.register_domain.labels.machines")}</label>
                             <Select onSelect={ip => setTarget(ip)}>
-                                { machines != undefined && machines.map((v, i) => {
+                                { machines != undefined && machines.map((v) => {
                                     return <Option value={v.address} label={`${v.name} - ${v.address}`}/>
                                 })}
                             </Select>

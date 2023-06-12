@@ -1,3 +1,4 @@
+using System.Net;
 using Backend.Services;
 using Backend.Utils;
 using Docker.DotNet;
@@ -6,6 +7,11 @@ using Microsoft.EntityFrameworkCore;
 using PfSense;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.WebHost.UseKestrel(x =>
+{
+    x.Listen(IPAddress.Any, 5000);
+});
 
 builder.Services.AddControllers();
 builder.Services.AddMvcCore(x =>

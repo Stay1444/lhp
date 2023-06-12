@@ -7,7 +7,6 @@ import { Option, Select } from "../../components/Select";
 import { ImageController, MachineController } from "../../api/Controllers";
 import ApiError from "../../api/ApiError";
 import { useNavigate } from "react-router";
-import Machine from "../../api/Machine";
 import Image from "../../api/Image";
 
 const CreateMachinePage = () => {
