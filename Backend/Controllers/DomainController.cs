@@ -116,15 +116,19 @@ public class DomainController : Controller
                 break;
             }
         }
-        
-        await pfSenseClient.AddHostOverride(new ()
+
+        _ = Task.Run(async () =>
         {
-            Host = domain.Host,
-            Domain = domain.Tld,
-            Ip = new []{ updateDomainRequest.target },
-            Apply = true,
-            Description = "Managed by LHP"
+            await pfSenseClient.AddHostOverride(new()
+            {
+                Host = domain.Host,
+                Domain = domain.Tld,
+                Ip = new[] { updateDomainRequest.target },
+                Apply = true,
+                Description = "Managed by LHP"
+            });
         });
+        
 
         return Ok();
     }
@@ -159,14 +163,14 @@ public class DomainController : Controller
             Target = registerDomainRequest.Target
         });
 
-        await pfSenseClient.AddHostOverride(new ()
+        _ = Task.Run(async () => pfSenseClient.AddHostOverride(new()
         {
             Host = registerDomainRequest.Domain,
             Domain = registerDomainRequest.Tld,
-            Ip = new []{ registerDomainRequest.Target },
+            Ip = new[] { registerDomainRequest.Target },
             Apply = true,
             Description = "Managed by LHP"
-        });
+        }));
 
         await db.SaveChangesAsync();
         
