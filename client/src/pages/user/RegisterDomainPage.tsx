@@ -4,9 +4,10 @@ import { LanguageContext } from "../../context/LanguageContext";
 import TextField from "../../components/TextField";
 import Button from "../../components/Button";
 import { Option, Select } from "../../components/Select";
-import { DomainController } from "../../api/Controllers";
+import { DomainController, MachineController } from "../../api/Controllers";
 import ApiError from "../../api/ApiError";
 import { useNavigate } from "react-router";
+import Machine from "../../api/Machine";
 
 const RegisterDomainPage = () => {
     const lang = useContext(LanguageContext);
@@ -14,12 +15,25 @@ const RegisterDomainPage = () => {
     const [error, setError] = useState<string | undefined>(undefined);
 
     const [domain, setDomain] = useState<string | undefined>(undefined);
+    const [machines, setMachines] = useState<Machine[] | undefined>(undefined);
     const [tld, setTld] = useState<string | undefined>(undefined);
     const [target, setTarget] = useState<string | undefined>(undefined);
 
     const [checked, setChecked] = useState<boolean>(true);
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+        MachineController.List().then(r => {
+            if (r != undefined) {
+                setMachines(r);
+
+                if (r.length > 0) {
+                    setTarget(r[0].address)
+                }
+            }
+        })
+    }, []);
 
     useEffect(() => {
         if (checked) return;
@@ -79,24 +93,26 @@ const RegisterDomainPage = () => {
                     <div>
                         { !advancedTargetMode && <>
                             <label>{lang.getString("pages.register_domain.labels.machines")}</label>
-                            <Select>
-                                <Option value="a" label="1"/>
-                                <Option value="b" label="b"/>
-                                <Option value="ac" label="c"/>
-                                <Option value="d" label="d"/>
+                            <Select onSelect={ip => setTarget(ip)}>
+                                { machines != undefined && machines.map((v, i) => {
+                                    return <Option value={v.address} label={`${v.name} - ${v.address}`}/>
+                                })}
                             </Select>
                             <Button label={lang.getString("pages.register_domain.controls.advanced")} onClick={() => setAdvancedTargetMode(true)}/>
                             </>
                         }
                         { advancedTargetMode && <>
                             <label>{lang.getString("pages.register_domain.labels.target_ip")}</label>
-                            <TextField className={style.textInput} placeholder="10.0.0.0" value={target} onChange={(e) => setTarget(e)}/>
+                            <TextField className={style.textInput} placeholder="10.0.0.0" value={target} onChange={(e) => {
+                                setChecked(false)
+                                setTarget(e)
+                            }}/>
                             <Button label={lang.getString("pages.register_domain.controls.simple")} onClick={() => setAdvancedTargetMode(false)}/>
                             </>
                         }
                     </div>
                 </div>
-                <Button label={lang.getString("pages.register_domain.controls.register")} theme="primary" className={style.submit} disabled={error != undefined || target == undefined} onClick={() => {
+                <Button label={lang.getString("pages.register_domain.controls.register")} theme="primary" className={style.submit} disabled={error != undefined || target == undefined || domain == undefined || tld == undefined} onClick={() => {
                     if (domain == undefined || tld == undefined || target == undefined) return;
                     
                     DomainController.Register(domain, tld, target).then(r => {

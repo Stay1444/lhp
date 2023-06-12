@@ -15,6 +15,8 @@ import HomePage from './pages/user/HomePage';
 import MachinesPage from './pages/user/MachinesPage';
 import DomainsPage from './pages/user/DomainsPage';
 import RegisterDomainPage from './pages/user/RegisterDomainPage';
+import EditDomainPage from './pages/user/EditDomainPage';
+import CreateMachinePage from './pages/user/CreateMachinePage';
 
 
 const App = () => {
@@ -30,12 +32,15 @@ const App = () => {
           <Route path='/' element={<MainLayout/>}>
             <Route index element={<HomePage/>}/>
             
-            <Route path='machines' element={<MachinesPage/>}/>
-            
+            <Route path='machines'>
+              <Route index element={<MachinesPage/>}/>
+              <Route path='create' element={<CreateMachinePage/>}/>
+            </Route>
+
             <Route path='domains'>
               <Route index element={<DomainsPage/>}/>
               <Route path='register' element={<RegisterDomainPage/>}/>
-              <Route path=':id' element={<h1>VIEWING DOMAIN WITH ID</h1>}/>
+              <Route path=':id' element={<EditDomainPage/>}/>
             </Route>
 
             <Route path='admin' element={<AdminLayout/>}>

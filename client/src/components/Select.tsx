@@ -5,7 +5,8 @@ import style from "./Select.module.sass"
 type SelectProps = PropsWithChildren<{
     className?: string,
     disabled?: boolean,
-    currentValue?: string
+    currentValue?: string,
+    onSelect?: (v: string) => void
 }>;
 
 type OptionProps = PropsWithChildren<{
@@ -14,9 +15,12 @@ type OptionProps = PropsWithChildren<{
     className?: string
 }>;
 
-const Select: React.FC<SelectProps> = ({className, disabled = false, children, currentValue}) => {
+const Select: React.FC<SelectProps> = ({className, disabled = false, children, currentValue, onSelect}) => {
     return (
-        <select className={`${style.select} ${className}`} disabled={disabled} defaultValue={currentValue}>
+        <select className={`${style.select} ${className}`} disabled={disabled} defaultValue={currentValue} onChange={(e) => {
+            if (onSelect == undefined) return;
+            onSelect(e.target.value)
+        }}>
             {children}
         </select>
     )

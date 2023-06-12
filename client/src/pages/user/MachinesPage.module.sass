@@ -22,7 +22,7 @@
         padding-right: 10px
         outline: 2px solid colors.$bg2
 
-    .registerBtn
+    .createBtn
         padding-left: 15px
         padding-right: 15px
 
@@ -45,9 +45,16 @@
 .row > td
     padding: 15px
 
-.row:hover
-    background-color: colors.$bg2
-    cursor: pointer
+.port
 
-.selectable
-    user-select: text
+    &:active
+        color: white
+    &:visited
+        color: white
+
+    color: white
+    text-decoration: none
+    padding-right: 5px
+
+    &:hover
+        color: colors.$primary

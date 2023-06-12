@@ -8,7 +8,8 @@ import Button from "../../components/Button";
 import { TbPlaylistAdd } from "react-icons/tb";
 import Domain from "../../api/Domain";
 import { useNavigate } from "react-router";
-import { DomainController } from "../../api/Controllers";
+import { DomainController, MachineController } from "../../api/Controllers";
+import Machine from "../../api/Machine";
 
 const DomainsPage = () => {
     const lang = useContext(LanguageContext);
@@ -16,12 +17,18 @@ const DomainsPage = () => {
 
     const [query, setQuery] = useState<string | undefined>(undefined);
     const [domains, setDomains] = useState<Domain[] | undefined>(undefined);
-
+    const [machines, setMachines] = useState<Machine[] | undefined>(undefined);
     useEffect(() => {
 
         DomainController.List().then((r) => {
             if (r != undefined) {
                 setDomains(r);
+            }
+        })
+
+        MachineController.List().then(r => {
+            if (r != undefined) {
+                setMachines(r)
             }
         })
 
@@ -81,11 +88,11 @@ const DomainsPage = () => {
                                 return  <tr className={style.row} key={i} onClick={() => {
                                     navigate(`/domains/${v.id}`)
                                 }}>
-                                            <td>{v.host}.{v.tld}</td>
-                                            <td>{v.host}</td>
-                                            <td>{v.tld}</td>
-                                            <td>{v.target}</td>
-                                        <td>{"<unknown>"}</td>
+                                            <td className={style.selectable}>{v.host}.{v.tld}</td>
+                                            <td className={style.selectable}>{v.host}</td>
+                                            <td className={style.selectable}>{v.tld}</td>
+                                            <td className={style.selectable}>{v.target}</td>
+                                        <td>{machines?.find(x => x.address == v.target)?.name}</td>
                             </tr>
                             })
                         }

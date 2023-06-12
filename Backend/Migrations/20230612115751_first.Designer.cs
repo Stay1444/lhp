@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Backend.Migrations
 {
     [DbContext(typeof(LHPDatabaseContext))]
-    [Migration("20230609192403_FirstMigration")]
-    partial class FirstMigration
+    [Migration("20230612115751_first")]
+    partial class first
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -86,6 +86,9 @@ namespace Backend.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<Guid>("AddressId")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("ContainerId")
                         .HasColumnType("text");
 
@@ -102,16 +105,38 @@ namespace Backend.Migrations
                     b.Property<Guid>("OwnerId")
                         .HasColumnType("uuid");
 
-                    b.Property<bool>("Running")
-                        .HasColumnType("boolean");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("AddressId");
 
                     b.HasIndex("ImageId");
 
                     b.HasIndex("OwnerId");
 
                     b.ToTable("Machines");
+                });
+
+            modelBuilder.Entity("Backend.Entities.MachineAddress", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("NetworkId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("NetworkName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Addresses");
                 });
 
             modelBuilder.Entity("Backend.Entities.User", b =>
@@ -154,6 +179,12 @@ namespace Backend.Migrations
 
             modelBuilder.Entity("Backend.Entities.Machine", b =>
                 {
+                    b.HasOne("Backend.Entities.MachineAddress", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Backend.Entities.Image", "Image")
                         .WithMany()
                         .HasForeignKey("ImageId")
@@ -165,6 +196,8 @@ namespace Backend.Migrations
                         .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Address");
 
                     b.Navigation("Image");
 

@@ -6,11 +6,25 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Backend.Migrations
 {
     /// <inheritdoc />
-    public partial class FirstMigration : Migration
+    public partial class first : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Addresses",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Address = table.Column<string>(type: "text", nullable: false),
+                    NetworkName = table.Column<string>(type: "text", nullable: false),
+                    NetworkId = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Addresses", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Images",
                 columns: table => new
@@ -71,13 +85,19 @@ namespace Backend.Migrations
                     OwnerId = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
                     CreationDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    Running = table.Column<bool>(type: "boolean", nullable: false),
                     ImageId = table.Column<Guid>(type: "uuid", nullable: false),
-                    ContainerId = table.Column<string>(type: "text", nullable: true)
+                    ContainerId = table.Column<string>(type: "text", nullable: true),
+                    AddressId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Machines", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Machines_Addresses_AddressId",
+                        column: x => x.AddressId,
+                        principalTable: "Addresses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Machines_Images_ImageId",
                         column: x => x.ImageId,
@@ -98,6 +118,11 @@ namespace Backend.Migrations
                 column: "OwnerId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Machines_AddressId",
+                table: "Machines",
+                column: "AddressId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Machines_ImageId",
                 table: "Machines",
                 column: "ImageId");
@@ -116,6 +141,9 @@ namespace Backend.Migrations
 
             migrationBuilder.DropTable(
                 name: "Machines");
+
+            migrationBuilder.DropTable(
+                name: "Addresses");
 
             migrationBuilder.DropTable(
                 name: "Images");

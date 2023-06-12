@@ -1,6 +1,9 @@
 using Backend.Services;
 using Backend.Utils;
+using Docker.DotNet;
+using Docker.DotNet.Models;
 using Microsoft.EntityFrameworkCore;
+using PfSense;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +13,11 @@ builder.Services.AddMvcCore(x =>
     x.ModelBinderProviders.Insert(0, new UserModelBinderProvider());
 });
 builder.Services.AddNpgsql<LHPDatabaseContext>(builder.Configuration["Postgres"] ?? Environment.GetEnvironmentVariable("Postgres"));
+
+var dockerClient = new DockerClientConfiguration(new Uri("unix:///var/run/docker.sock")).CreateClient();
+
+builder.Services.AddSingleton<PfSenseClient>((_) => new PfSenseClient(Environment.GetEnvironmentVariable("PF_CID")!, Environment.GetEnvironmentVariable("PF_TOKEN")!, Environment.GetEnvironmentVariable("PF_ADDRESS")!));
+builder.Services.AddSingleton(dockerClient);
 
 builder.Services.AddCors(options =>
 {

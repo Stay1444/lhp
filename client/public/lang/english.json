@@ -67,6 +67,47 @@
                 "host": "example",
                 "tld": "com"
             }
+        },
+        "edit_domain": {
+            "labels": {
+                "target": "Target",
+                "machines": "Machines",
+                "target_ip": "Target IP"
+            },
+            "controls": {
+                "advanced": "Advanced",
+                "simple": "Simple",
+                "update": "Update",
+                "delete": "Delete"
+            }
+        },
+        "machines": {
+            "title": "Your Machines",
+            "controls": {
+                "title": "Machines",
+                "search": "Search...",
+                "create_machine": "Create Machine"
+            },
+            "th": {
+                "name": "Name",
+                "state": "State",
+                "image": "Image",
+                "created": "Created",
+                "ip": "IP Address",
+                "ports": "Ports",
+                "actions": "Actions"
+            }
+        },
+        "create_machine": {
+            "title": "Create Machine",
+            "labels": {
+                "parameters": "Parameters",
+                "name": "Name",
+                "image": "Image"
+            },
+            "controls": {
+                "create": "Create"
+            }
         }
     }
 }

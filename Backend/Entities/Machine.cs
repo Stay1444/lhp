@@ -11,11 +11,11 @@ public class Machine
     public string Name { get; set; }
     public DateTimeOffset CreationDate { get; set; }
     
-    public bool Running { get; set; }
-    
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public Image Image { get; set; }
     
     [JsonIgnore]
     public string? ContainerId { get; set; }
+    
+    public MachineAddress Address { get; set; }
 }
