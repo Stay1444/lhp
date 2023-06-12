@@ -1,71 +1,111 @@
 {
-    "languages": {
-      "English": "Inglés",
-      "Spanish": "Español"
+  "languages": {
+    "English": "Inglés",
+    "Spanish": "Español"
+  },
+  "sidebar": {
+    "panel": {
+      "title": "Panel",
+      "home": "Inicio",
+      "machines": "Máquinas",
+      "domains": "Dominios"
     },
-    "sidebar": {
-      "panel": {
-        "title": "Panel",
-        "home": "Inicio",
-        "machines": "Máquinas",
-        "domains": "Dominios"
-      },
-      "admin": {
-        "title": "Administración",
-        "users": "Usuarios",
-        "machines": "Máquinas",
-        "domains": "Dominios",
-        "limits": "Límites",
-        "settings": "Configuración"
+    "admin": {
+      "title": "Administrador",
+      "users": "Usuarios",
+      "machines": "Máquinas",
+      "domains": "Dominios",
+      "limits": "Límites",
+      "settings": "Configuración"
+    }
+  },
+  "pages": {
+    "home": {
+      "cards": {
+        "machines": {
+          "title": "Máquinas",
+          "on": "En ejecución",
+          "off": "Detenidas"
+        },
+        "domains": {
+          "title": "Dominios",
+          "registered": "Dominios registrados"
+        }
       }
     },
-    "pages": {
-      "home": {
-        "cards": {
-          "machines": {
-            "title": "Máquinas",
-            "on": "En ejecución",
-            "off": "Detenidas"
-          },
-          "domains": {
-            "title": "Dominios",
-            "registered": "Dominios registrados"
-          }
-        }
+    "domains": {
+      "title": "Tus Dominios",
+      "th": {
+        "name": "Nombre",
+        "tld": "Dominio de nivel superior",
+        "ip": "Dirección IP",
+        "fullname": "Nombre completo",
+        "machine": "Máquina"
       },
-      "domains": {
-        "title": "Tus dominios",
-        "th": {
-          "name": "Nombre",
-          "tld": "Dominio de nivel superior",
-          "ip": "Dirección IP",
-          "fullname": "Nombre completo",
-          "machine": "Máquina"
-        },
-        "controls": {
-          "title": "Dominios",
-          "register_domain": "Registrar dominio",
-          "search": "Buscar..."
-        }
+      "controls": {
+        "title": "Dominios",
+        "register_domain": "Registrar Dominio",
+        "search": "Buscar..."
+      }
+    },
+    "register_domain": {
+      "title": "Registrar Dominio",
+      "labels": {
+        "domain": "Dominio",
+        "target": "Objetivo",
+        "machines": "Máquinas",
+        "target_ip": "IP del objetivo"
       },
-        "register_domain": {
-            "title": "Registrar Dominio",
-            "labels": {
-                "domain": "Dominio",
-                "target": "Objetivo",
-                "machines": "Máquinas",
-                "target_ip": "IP Objetivo"
-            },
-            "controls": {
-                "advanced": "Avanzado",
-                "simple": "Simple",
-                "register": "Registrar"
-            },
-            "examples": {
-                "host": "ejemplo",
-                "tld": "es"
-            }
-        }
+      "controls": {
+        "advanced": "Avanzado",
+        "simple": "Sencillo",
+        "register": "Registrar"
+      },
+      "examples": {
+        "host": "ejemplo",
+        "tld": "com"
+      }
+    },
+    "edit_domain": {
+      "labels": {
+        "target": "Objetivo",
+        "machines": "Máquinas",
+        "target_ip": "IP del objetivo"
+      },
+      "controls": {
+        "advanced": "Avanzado",
+        "simple": "Sencillo",
+        "update": "Actualizar",
+        "delete": "Eliminar"
+      }
+    },
+    "machines": {
+      "title": "Tus Máquinas",
+      "controls": {
+        "title": "Máquinas",
+        "search": "Buscar...",
+        "create_machine": "Crear Máquina"
+      },
+      "th": {
+        "name": "Nombre",
+        "state": "Estado",
+        "image": "Imagen",
+        "created": "Creada",
+        "ip": "Dirección IP",
+        "ports": "Puertos",
+        "actions": "Acciones"
+      }
+    },
+    "create_machine": {
+      "title": "Crear Máquina",
+      "labels": {
+        "parameters": "Parámetros",
+        "name": "Nombre",
+        "image": "Imagen"
+      },
+      "controls": {
+        "create": "Crear"
+      }
     }
   }
-  
+}
