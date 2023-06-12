@@ -2,11 +2,17 @@ using System.Net;
 using Backend.Services;
 using Backend.Utils;
 using Docker.DotNet;
-using Docker.DotNet.Models;
 using Microsoft.EntityFrameworkCore;
 using PfSense;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddLogging(x =>
+{
+    x.ClearProviders();
+    x.AddSerilog(new LoggerConfiguration().WriteTo.Console().MinimumLevel.Information().CreateLogger());
+});
 
 builder.WebHost.UseKestrel(x =>
 {
@@ -24,6 +30,9 @@ var dockerClient = new DockerClientConfiguration(new Uri("unix:///var/run/docker
 
 builder.Services.AddSingleton<PfSenseClient>((_) => new PfSenseClient(Environment.GetEnvironmentVariable("PF_CID")!, Environment.GetEnvironmentVariable("PF_TOKEN")!, Environment.GetEnvironmentVariable("PF_ADDRESS")!));
 builder.Services.AddSingleton(dockerClient);
+
+builder.Services.AddSingleton<DnsUpdater>();
+builder.Services.AddHostedService<DnsUpdater>(x => x.GetRequiredService<DnsUpdater>());
 
 builder.Services.AddCors(options =>
 {

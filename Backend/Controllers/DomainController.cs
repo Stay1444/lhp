@@ -3,7 +3,6 @@ using Backend.Entities;
 using Backend.Requests;
 using Backend.Services;
 using Backend.Utils;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PfSense;
@@ -14,10 +13,18 @@ namespace Backend.Controllers;
 [Route("/api/domain")]
 public class DomainController : Controller
 {
+    private readonly DnsUpdater _dnsUpdater;
+
+    public DomainController(DnsUpdater dnsUpdater)
+    {
+        _dnsUpdater = dnsUpdater;
+    }
+
     [HttpGet("list")]
     [SecureRoute]
     public async Task<IActionResult> ListAsync(User user, [FromServices] LHPDatabaseContext db)
     {
+        // TODO: CHECK HERE DNSUPDATER STATE.
         var domains = await db.Domains.Where(x => x.Owner.Id == user.Id).ToListAsync();
         return Ok(domains);
     }
@@ -47,24 +54,8 @@ public class DomainController : Controller
 
         db.Domains.Remove(domain);
 
-        var overrides = await pfSenseClient.GetHostOverrides();
+        await _dnsUpdater.QueueAsync(domain, DnsJobType.Delete);
 
-        for (var i = 0; i < overrides.Length; i++)
-        {
-            var o = overrides[i];
-
-            if (o.Host == domain.Host && o.Domain == domain.Tld)
-            {
-                await pfSenseClient.DeleteHostOverride(i);
-                break;
-            }
-        }
-
-        _ = Task.Run(async () =>
-        {
-            await pfSenseClient.HostOverrideApply();
-        });
-        
         await db.SaveChangesAsync();
         
         return Ok();
@@ -107,31 +98,7 @@ public class DomainController : Controller
         
         await db.SaveChangesAsync();
 
-        var overrides = await pfSenseClient.GetHostOverrides();
-
-        for (var i = 0; i < overrides.Length; i++)
-        {
-            var o = overrides[i];
-
-            if (o.Host == domain.Host && o.Domain == domain.Tld)
-            {
-                await pfSenseClient.DeleteHostOverride(i);
-                break;
-            }
-        }
-
-        _ = Task.Run(async () =>
-        {
-            await pfSenseClient.AddHostOverride(new()
-            {
-                Host = domain.Host,
-                Domain = domain.Tld,
-                Ip = new[] { updateDomainRequest.target },
-                Apply = true,
-                Description = "Managed by LHP"
-            });
-        });
-        
+        await _dnsUpdater.QueueAsync(domain, DnsJobType.CreateOrUpdate);
 
         return Ok();
     }
@@ -166,14 +133,7 @@ public class DomainController : Controller
             Target = registerDomainRequest.Target
         });
 
-        _ = Task.Run(async () => pfSenseClient.AddHostOverride(new()
-        {
-            Host = registerDomainRequest.Domain,
-            Domain = registerDomainRequest.Tld,
-            Ip = new[] { registerDomainRequest.Target },
-            Apply = true,
-            Description = "Managed by LHP"
-        }));
+        await _dnsUpdater.QueueAsync(domain.Entity, DnsJobType.CreateOrUpdate);
 
         await db.SaveChangesAsync();
         
