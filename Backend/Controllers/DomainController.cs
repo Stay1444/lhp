@@ -13,11 +13,11 @@ namespace Backend.Controllers;
 [Route("/api/domain")]
 public class DomainController : Controller
 {
-    private readonly DnsUpdater _dnsUpdater;
+    private readonly DnsService _dnsService;
 
-    public DomainController(DnsUpdater dnsUpdater)
+    public DomainController(DnsService dnsService)
     {
-        _dnsUpdater = dnsUpdater;
+        _dnsService = dnsService;
     }
 
     [HttpGet("list")]
@@ -54,7 +54,7 @@ public class DomainController : Controller
 
         db.Domains.Remove(domain);
 
-        await _dnsUpdater.QueueAsync(domain, DnsJobType.Delete);
+        await _dnsService.QueueAsync(domain, DnsJobType.Delete);
 
         await db.SaveChangesAsync();
         
@@ -98,7 +98,7 @@ public class DomainController : Controller
         
         await db.SaveChangesAsync();
 
-        await _dnsUpdater.QueueAsync(domain, DnsJobType.CreateOrUpdate);
+        await _dnsService.QueueAsync(domain, DnsJobType.CreateOrUpdate);
 
         return Ok();
     }
@@ -133,7 +133,7 @@ public class DomainController : Controller
             Target = registerDomainRequest.Target
         });
 
-        await _dnsUpdater.QueueAsync(domain.Entity, DnsJobType.CreateOrUpdate);
+        await _dnsService.QueueAsync(domain.Entity, DnsJobType.CreateOrUpdate);
 
         await db.SaveChangesAsync();
         

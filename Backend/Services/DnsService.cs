@@ -10,7 +10,7 @@ public enum DnsJobType
     Delete,
 }
 
-public sealed class DnsUpdater : BackgroundService
+public sealed class DnsService : BackgroundService
 {
     private record DnsJob(Domain Domain, DnsJobType Type);
     
@@ -20,9 +20,9 @@ public sealed class DnsUpdater : BackgroundService
     private readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1);
     private readonly List<DnsJob> _updates = new List<DnsJob>();
 
-    private ILogger<DnsUpdater> _logger;
+    private ILogger<DnsService> _logger;
 
-    public DnsUpdater(LHPDatabaseContext db, PfSenseClient pfSenseClient, ILogger<DnsUpdater> logger)
+    public DnsService(LHPDatabaseContext db, PfSenseClient pfSenseClient, ILogger<DnsService> logger)
     {
         _db = db;
         _pfSenseClient = pfSenseClient;

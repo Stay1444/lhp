@@ -31,8 +31,8 @@ var dockerClient = new DockerClientConfiguration(new Uri("unix:///var/run/docker
 builder.Services.AddSingleton<PfSenseClient>((_) => new PfSenseClient(Environment.GetEnvironmentVariable("PF_CID")!, Environment.GetEnvironmentVariable("PF_TOKEN")!, Environment.GetEnvironmentVariable("PF_ADDRESS")!));
 builder.Services.AddSingleton(dockerClient);
 
-builder.Services.AddSingleton<DnsUpdater>();
-builder.Services.AddHostedService<DnsUpdater>(x => x.GetRequiredService<DnsUpdater>());
+builder.Services.AddSingleton<DnsService>();
+builder.Services.AddHostedService<DnsService>(x => x.GetRequiredService<DnsService>());
 
 builder.Services.AddCors(options =>
 {
