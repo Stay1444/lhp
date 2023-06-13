@@ -137,6 +137,7 @@ public sealed class DnsService : BackgroundService
                     await _pfSenseClient.HostOverrideApply();
                 }
             }
+            _updates.Clear();
         }
         finally
         {
