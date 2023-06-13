@@ -33,7 +33,7 @@ services:
     networks:
       lhp:
     volumes:
-      - /var/lib/docker.sock:/var/lib/docker.sock
+      - /var/run/docker.sock:/var/run/docker.sock
     environment:
       <<: *x-common
       Postgres: "User ID=postgres;Password=root;Host=postgres;Port=5432;Database=lhp"
