@@ -110,6 +110,7 @@ const MachinesPage = () => {
                                 .filter((v) => queryItem(v))
                                 .map((v, i) => {
                                     const state = machineStates.find(x => x.id == v.id);
+                                    console.log(v)
                                 return  <tr className={style.row} key={i}>
                                         <td style={{display: 'flex', flexDirection: 'row', columnGap: '10px', alignItems: 'center', justifyContent: 'center'}}> 
                                             <Button label="" theme="danger" onClick={() => {
