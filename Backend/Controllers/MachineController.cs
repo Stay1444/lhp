@@ -118,6 +118,10 @@ public class MachineController : Controller
                     {
                         NetworkID = address.NetworkId,
                         IPAddress = address.Address,
+                        IPAMConfig = new()
+                        {
+                            IPv4Address = address.Address,
+                        }
                     }}
                 }
             }
