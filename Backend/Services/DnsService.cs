@@ -1,5 +1,4 @@
 using Backend.Entities;
-using Microsoft.EntityFrameworkCore;
 using PfSense;
 
 namespace Backend.Services;
@@ -14,17 +13,15 @@ public sealed class DnsService : BackgroundService
 {
     private record DnsJob(Domain Domain, DnsJobType Type);
     
-    private readonly LHPDatabaseContext _db;
     private readonly PfSenseClient _pfSenseClient;
     private readonly PeriodicTimer _timer = new PeriodicTimer(TimeSpan.FromSeconds(60));
     private readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1);
     private readonly List<DnsJob> _updates = new List<DnsJob>();
 
-    private ILogger<DnsService> _logger;
+    private readonly ILogger<DnsService> _logger;
 
-    public DnsService(LHPDatabaseContext db, PfSenseClient pfSenseClient, ILogger<DnsService> logger)
+    public DnsService(PfSenseClient pfSenseClient, ILogger<DnsService> logger)
     {
-        _db = db;
         _pfSenseClient = pfSenseClient;
         _logger = logger;
     }
@@ -34,7 +31,7 @@ public sealed class DnsService : BackgroundService
         while (!stoppingToken.IsCancellationRequested)
         {
             await _timer.WaitForNextTickAsync(stoppingToken);
-            await Work();
+            await ProcessQueueAsync();
         }
     }
 
@@ -51,8 +48,21 @@ public sealed class DnsService : BackgroundService
         }
     }
 
+    public async Task<DnsJobType?> GetJobTypeAsync(Guid domainId)
+    {
+        try
+        {
+            await _semaphore.WaitAsync();
 
-    private async Task Work()
+            return _updates.FirstOrDefault(x => x.Domain.Id == domainId)?.Type;
+        }
+        finally
+        {
+            _semaphore.Release();
+        }
+    }
+
+    private async Task ProcessQueueAsync()
     {
         try
         {

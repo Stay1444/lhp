@@ -24,7 +24,6 @@ public class DomainController : Controller
     [SecureRoute]
     public async Task<IActionResult> ListAsync(User user, [FromServices] LHPDatabaseContext db)
     {
-        // TODO: CHECK HERE DNSUPDATER STATE.
         var domains = await db.Domains.Where(x => x.Owner.Id == user.Id).ToListAsync();
         return Ok(domains);
     }
@@ -52,6 +51,11 @@ public class DomainController : Controller
 
         if (domain.Owner.Id != user.Id) return Unauthorized();
 
+        if (await _dnsService.GetJobTypeAsync(domain.Id) is not null)
+        {
+            return BadRequest(new { code = 1, message = "Domain is locked." });
+        }
+        
         db.Domains.Remove(domain);
 
         await _dnsService.QueueAsync(domain, DnsJobType.Delete);
@@ -92,6 +96,11 @@ public class DomainController : Controller
         if (!IPAddress.TryParse(updateDomainRequest.target, out _))
         {
             return BadRequest(new { code = 1, message = "Invalid IP Address" });
+        }
+        
+        if (await _dnsService.GetJobTypeAsync(domain.Id) is not null)
+        {
+            return BadRequest(new { code = 2, message = "Domain is locked. Please wait." });
         }
         
         domain.Target = updateDomainRequest.target;
