@@ -17,7 +17,9 @@ public class MachineController : Controller
     [SecureRoute]
     public async Task<IActionResult> ListAsync(User user, [FromServices] LHPDatabaseContext db)
     {
-        var machines = await db.Machines.Include(x => x.Image).Where(x => x.Owner.Id == user.Id).ToListAsync();
+        var machines = await db.Machines.Include(x => x.Image)
+            .Include(x => x.Address)
+            .Where(x => x.Owner.Id == user.Id).ToListAsync();
 
         return Ok(machines);
     }
@@ -117,7 +119,7 @@ public class MachineController : Controller
             }
         });
         
-        var machine = db.Machines.AddAsync(new Machine()
+        var machine = await db.Machines.AddAsync(new Machine()
         {
             Id = machineId,
             Owner = user,
@@ -130,7 +132,7 @@ public class MachineController : Controller
 
         await db.SaveChangesAsync();
         
-        return Ok(machines);
+        return Ok(machine.Entity);
     }
 
     [HttpGet("{id:guid}/status")]
