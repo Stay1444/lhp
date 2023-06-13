@@ -69,8 +69,8 @@ const HomePage = () => {
         <div className={style.container}>
             { 
                 machines && <Card name={langCtx.getString("pages.home.cards.machines.title")} path='/machines'>
-                <label style={{display: 'block', marginBottom: '15px'}}><i className={`${style.ellipse} ${style.green}`}/>{machineStates?.filter(x => x.status != "running").length} {langCtx.getString("pages.home.cards.machines.on")}</label>
-                <label style={{display: 'block'}}><i className={`${style.ellipse} ${style.red}`}/>{machineStates?.filter(x => x.status == "running").length} {langCtx.getString("pages.home.cards.machines.off")}</label>
+                <label style={{display: 'block', marginBottom: '15px'}}><i className={`${style.ellipse} ${style.green}`}/>{machineStates?.filter(x => x.status == "running").length} {langCtx.getString("pages.home.cards.machines.on")}</label>
+                <label style={{display: 'block'}}><i className={`${style.ellipse} ${style.red}`}/>{machineStates?.filter(x => x.status != "running").length} {langCtx.getString("pages.home.cards.machines.off")}</label>
             </Card>
             }
 
