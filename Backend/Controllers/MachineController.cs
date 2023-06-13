@@ -106,14 +106,18 @@ public class MachineController : Controller
         {
             Image = image.DockerImage,
             Name = machineId.ToString(),
+            HostConfig = new HostConfig()
+            {
+                NetworkMode = address.NetworkName
+            },
             NetworkingConfig = new NetworkingConfig
             {
                 EndpointsConfig = new Dictionary<string, EndpointSettings>()
                 {
-                    {address.NetworkName, new EndpointSettings()
+                    { address.NetworkName, new EndpointSettings()
                     {
                         NetworkID = address.NetworkId,
-                        IPAddress = address.Address
+                        IPAddress = address.Address,
                     }}
                 }
             }
