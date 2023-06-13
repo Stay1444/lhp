@@ -29,7 +29,7 @@ const RegisterDomainPage = () => {
                 setMachines(r);
 
                 if (r.length > 0) {
-                    setTarget(r[0].address)
+                    setTarget(r[0].address.address)
                 }
             }
         })
@@ -95,7 +95,7 @@ const RegisterDomainPage = () => {
                             <label>{lang.getString("pages.register_domain.labels.machines")}</label>
                             <Select onSelect={ip => setTarget(ip)}>
                                 { machines != undefined && machines.map((v) => {
-                                    return <Option value={v.address} label={`${v.name} - ${v.address}`}/>
+                                    return <Option value={v.address.address} label={`${v.name} - ${v.address}`}/>
                                 })}
                             </Select>
                             <Button label={lang.getString("pages.register_domain.controls.advanced")} onClick={() => setAdvancedTargetMode(true)}/>

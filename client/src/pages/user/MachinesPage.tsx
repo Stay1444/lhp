@@ -61,7 +61,7 @@ const MachinesPage = () => {
 
         if (
             item.name.toLowerCase().includes(query.toLowerCase()) ||
-            item.address.toLowerCase().includes(query.toLowerCase())
+            item.address.address.toLowerCase().includes(query.toLowerCase())
         )
         {
             return item;
@@ -134,8 +134,8 @@ const MachinesPage = () => {
                                         <td>{state?.status}</td>
                                         <td>{v.image?.name ?? "<unknown>"}</td>
                                         <td>{new Date(v.creationDate).toLocaleTimeString()} {new Date(v.creationDate).toDateString()}</td>
-                                        <td>{v.address}</td>
-                                        <td>{v.image?.exposedPorts.map(x => <a className={style.port} target="_blank" href={`https://${v.address}:${x}/`}>{x}</a>)}</td>
+                                        <td>{v.address.address}</td>
+                                        <td>{v.image?.exposedPorts.map(x => <a className={style.port} target="_blank" href={`https://${v.address.address}:${x}/`}>{x}</a>)}</td>
                                     </tr>
                             })
                         }

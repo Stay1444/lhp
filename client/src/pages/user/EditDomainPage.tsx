@@ -57,9 +57,9 @@ const EditDomainPage = () => {
                     <div>
                         { !advancedTargetMode && <>
                             <label>{lang.getString("pages.edit_domain.labels.machines")}</label>
-                            <Select currentValue={machines?.find(x => x.address == domain.target)?.address} onSelect={x => setTarget(x)}>
+                            <Select currentValue={machines?.find(x => x.address.address == domain.target)?.address.address} onSelect={x => setTarget(x)}>
                                 { machines != undefined && machines.map((v) => {
-                                    return <Option value={v.address} label={`${v.name} - ${v.address}`}/>
+                                    return <Option value={v.address.address} label={`${v.name} - ${v.address}`}/>
                                 })}
                             </Select>
                             <Button label={lang.getString("pages.edit_domain.controls.advanced")} onClick={() => setAdvancedTargetMode(true)}/>

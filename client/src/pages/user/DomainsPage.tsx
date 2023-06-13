@@ -92,7 +92,7 @@ const DomainsPage = () => {
                                             <td className={style.selectable}>{v.host}</td>
                                             <td className={style.selectable}>{v.tld}</td>
                                             <td className={style.selectable}>{v.target}</td>
-                                        <td>{machines?.find(x => x.address == v.target)?.name}</td>
+                                        <td>{machines?.find(x => x.address.address == v.target)?.name}</td>
                             </tr>
                             })
                         }
