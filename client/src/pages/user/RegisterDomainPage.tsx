@@ -129,7 +129,6 @@ const RegisterDomainPage = () => {
                             setError(r.message)
                             return
                         }
-                        console.log(r)
 
                         navigate("/domains")
                     }).catch(() => {
