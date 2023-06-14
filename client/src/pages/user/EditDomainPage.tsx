@@ -17,6 +17,7 @@ const EditDomainPage = () => {
     const [advancedTargetMode, setAdvancedTargetMode] = useState<boolean>(false)
     const [error, setError] = useState<string | undefined>(undefined);
 
+    const [locked, setLocked] = useState(false);
     const [domain, setDomain] = useState<Domain | undefined>(undefined);
     const [machines, setMachines] = useState<Machine[] | undefined>(undefined);
     const [target, setTarget] = useState<string | undefined>(undefined);
@@ -81,8 +82,10 @@ const EditDomainPage = () => {
                     </div>
                 </div>
                 <div className={style.buttonGroup}>
-                    <Button label={lang.getString("pages.edit_domain.controls.delete")} theme="danger" className={style.delete} onClick={() => {
+                    <Button label={lang.getString("pages.edit_domain.controls.delete")} theme="danger" className={style.delete} disabled={locked} onClick={() => {
+                        setLocked(true)
                         DomainController.Delete(domain.id).then((r) => {
+                            setLocked(false)
                             if (r instanceof ApiError) {
                                 setError(r.message)
                                 return;
@@ -97,10 +100,12 @@ const EditDomainPage = () => {
                         })
                         return;
                     }}/>
-                    <Button label={lang.getString("pages.edit_domain.controls.update")} theme="primary" className={style.submit} disabled={error != undefined || target == undefined} onClick={() => {
+                    <Button label={lang.getString("pages.edit_domain.controls.update")} theme="primary" className={style.submit} disabled={error != undefined || locked || target == undefined} onClick={() => {
                         if (domain == undefined || target == undefined) return;
                         
+                        setLocked(true)
                         DomainController.Update(domain.id, target).then(r => {
+                            setLocked(false)
                             if (r instanceof ApiError) {
                                 setError(r.message);
                                 return;

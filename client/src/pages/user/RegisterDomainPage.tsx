@@ -15,6 +15,7 @@ const RegisterDomainPage = () => {
     const [error, setError] = useState<string | undefined>(undefined);
 
     const [domain, setDomain] = useState<string | undefined>(undefined);
+    const [locked, setLocked] = useState(false);
     const [machines, setMachines] = useState<Machine[] | undefined>(undefined);
     const [tld, setTld] = useState<string | undefined>(undefined);
     const [target, setTarget] = useState<string | undefined>(undefined);
@@ -112,10 +113,13 @@ const RegisterDomainPage = () => {
                         }
                     </div>
                 </div>
-                <Button label={lang.getString("pages.register_domain.controls.register")} theme="primary" className={style.submit} disabled={error != undefined || target == undefined || domain == undefined || tld == undefined} onClick={() => {
-                    if (domain == undefined || tld == undefined || target == undefined) return;
-                    
+                <Button label={lang.getString("pages.register_domain.controls.register")} theme="primary" className={style.submit} disabled={error != undefined || locked || target == undefined || domain == undefined || tld == undefined} onClick={() => {
+                    if (domain == undefined || tld == undefined || target == undefined || locked) return;
+                    setLocked(true);
+
                     DomainController.Register(domain, tld, target).then(r => {
+                        setLocked(false);
+
                         if (r == undefined) {
                             setError("An unknown error ocurred.")
                             return
@@ -128,6 +132,8 @@ const RegisterDomainPage = () => {
                         console.log(r)
 
                         navigate("/domains")
+                    }).catch(() => {
+                        setLocked(false);
                     })
                 }}/>
             </div>
