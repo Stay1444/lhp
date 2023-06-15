@@ -20,12 +20,38 @@ public class DomainController : Controller
         _dnsService = dnsService;
     }
 
+    public class DomainWithStatus : Domain
+    {
+        public DomainWithStatus(Domain other)
+        {
+            this.Id = other.Id;
+            this.Owner = other.Owner;
+            this.Tld = other.Tld;
+            this.Host = other.Host;
+            this.Target = other.Target;
+        }
+        
+        public int Status { get; set; }
+    }
+    
     [HttpGet("list")]
     [SecureRoute]
     public async Task<IActionResult> ListAsync(User user, [FromServices] LHPDatabaseContext db)
     {
         var domains = await db.Domains.Where(x => x.Owner.Id == user.Id).ToListAsync();
-        return Ok(domains);
+
+        var response = new List<DomainWithStatus>();
+
+        foreach (var domain in domains)
+        {
+            var status = await _dnsService.GetJobTypeAsync(domain.Id);
+            response.Add(new DomainWithStatus(domain)
+            {
+                Status = status is null ? 0 : (int)status
+            });
+        }
+
+        return Ok(response);
     }
 
     [HttpGet("{id:guid}")]
@@ -127,12 +153,11 @@ public class DomainController : Controller
             return BadRequest(new { code = 2, message = "Invalid IP Address"});
         }
         
-        if (await db.Domains.AnyAsync(x =>
-                x.Host == registerDomainRequest.Domain.ToLower() && x.Tld == registerDomainRequest.Tld.ToLower()))
+        if (await _dnsService.IsDomainTaken(registerDomainRequest.Domain, registerDomainRequest.Tld))
         {
             return BadRequest(new { code = 3, message = "Domain already taken." });
         }
-
+        
         var domain = await db.Domains.AddAsync(new Domain()
         {
             Id = Guid.NewGuid(),

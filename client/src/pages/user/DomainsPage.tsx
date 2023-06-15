@@ -76,6 +76,7 @@ const DomainsPage = () => {
                             <th>{lang.getString("pages.domains.th.fullname")}</th>
                             <th>{lang.getString("pages.domains.th.name")}</th>
                             <th>{lang.getString("pages.domains.th.tld")}</th>
+                            <th>{lang.getString("pages.domains.th.status")}</th>
                             <th>{lang.getString("pages.domains.th.ip")}</th>
                             <th>{lang.getString("pages.domains.th.machine")}</th>
                         </tr>
@@ -85,12 +86,15 @@ const DomainsPage = () => {
                             domains
                                 .filter((v) => queryItem(v))
                                 .map((v, i) => {
-                                return  <tr className={style.row} key={i} onClick={() => {
+                                const locked = v.status != 0;
+                                return  <tr className={`${style.row} ${locked ? style.rowLocked : ''}`} key={i} onClick={() => {
+                                    if (locked) return;
                                     navigate(`/domains/${v.id}`)
                                 }}>
                                             <td className={style.selectable}>{v.host}.{v.tld}</td>
                                             <td className={style.selectable}>{v.host}</td>
                                             <td className={style.selectable}>{v.tld}</td>
+                                            <td>{locked ? "LOCKED" : "READY"}</td>
                                             <td className={style.selectable}>{v.target}</td>
                                         <td>{machines?.find(x => x.address.address == v.target)?.name}</td>
                             </tr>

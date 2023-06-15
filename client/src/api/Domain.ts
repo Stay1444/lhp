@@ -3,4 +3,5 @@ export default class Domain {
     public host!: string
     public tld!: string
     public target!: string
+    public status?: number | undefined
 }

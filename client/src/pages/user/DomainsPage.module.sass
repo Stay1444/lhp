@@ -42,12 +42,30 @@
 .row
     transition-duration: 250ms
 
+@keyframes(lockBlink)
+  0%
+    background-color: colors.$bg1
+  50%
+    background-color: colors.$danger
+  100%
+    background-color: colors.$bg1
+
+.rowLocked
+    cursor: wait
+    animation-name: lockBlink
+    animation-duration: 2s
+    animation-iteration-count: infinite
+
 .row > td
     padding: 15px
 
 .row:hover
     background-color: colors.$bg2
     cursor: pointer
+
+.rowLocked:hover
+    cursor: wait !important
+    background-color: colors.$danger
 
 .selectable
     user-select: text

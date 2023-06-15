@@ -39,6 +39,7 @@
         "name": "Nombre",
         "tld": "Dominio de nivel superior",
         "ip": "Dirección IP",
+        "status": "Estado",
         "fullname": "Nombre completo",
         "machine": "Máquina"
       },

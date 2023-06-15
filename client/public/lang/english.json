@@ -40,6 +40,7 @@
                 "name": "Name",
                 "tld": "Top Level Domain",
                 "ip": "IP Address",
+                "status": "Status",
                 "fullname": "Full Name",
                 "machine": "Machine"
             },

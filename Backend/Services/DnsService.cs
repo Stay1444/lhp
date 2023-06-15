@@ -1,12 +1,13 @@
 using Backend.Entities;
+using Microsoft.EntityFrameworkCore;
 using PfSense;
 
 namespace Backend.Services;
 
 public enum DnsJobType
 {
-    CreateOrUpdate,
-    Delete,
+    CreateOrUpdate = 1,
+    Delete = 2
 }
 
 public sealed class DnsService : BackgroundService
@@ -15,15 +16,17 @@ public sealed class DnsService : BackgroundService
     
     private readonly PfSenseClient _pfSenseClient;
     private readonly PeriodicTimer _timer = new PeriodicTimer(TimeSpan.FromSeconds(60));
-    private readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1);
+    private readonly SemaphoreSlim _queueSemaphore = new SemaphoreSlim(1);
+    private readonly SemaphoreSlim _validitySemaphore = new SemaphoreSlim(1);
     private readonly List<DnsJob> _updates = new List<DnsJob>();
-
+    private readonly LHPDatabaseContext _dbContext;
     private readonly ILogger<DnsService> _logger;
 
-    public DnsService(PfSenseClient pfSenseClient, ILogger<DnsService> logger)
+    public DnsService(PfSenseClient pfSenseClient, ILogger<DnsService> logger, LHPDatabaseContext dbContext)
     {
         _pfSenseClient = pfSenseClient;
         _logger = logger;
+        _dbContext = dbContext;
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -35,16 +38,31 @@ public sealed class DnsService : BackgroundService
         }
     }
 
+    public async Task<bool> IsDomainTaken(string host, string tld)
+    {
+        try
+        {
+            await _validitySemaphore.WaitAsync();
+            return await _dbContext.Domains.AnyAsync(x =>
+                host.ToLower() == x.Host.ToLower() && tld.ToLower() == x.Tld.ToLower()
+            );
+        }
+        finally
+        {
+            _validitySemaphore.Release();
+        }
+    }
+
     public async Task QueueAsync(Domain domain, DnsJobType jobType)
     {
         try
         {
-            await _semaphore.WaitAsync();
+            await _queueSemaphore.WaitAsync();
             _updates.Add(new DnsJob(domain, jobType));
         }
         finally
         {
-            _semaphore.Release();
+            _queueSemaphore.Release();
         }
     }
 
@@ -52,13 +70,13 @@ public sealed class DnsService : BackgroundService
     {
         try
         {
-            await _semaphore.WaitAsync();
+            await _queueSemaphore.WaitAsync();
 
             return _updates.FirstOrDefault(x => x.Domain.Id == domainId)?.Type;
         }
         finally
         {
-            _semaphore.Release();
+            _queueSemaphore.Release();
         }
     }
 
@@ -66,7 +84,7 @@ public sealed class DnsService : BackgroundService
     {
         try
         {
-            await _semaphore.WaitAsync();
+            await _queueSemaphore.WaitAsync();
 
             bool changed = false;
 
@@ -142,7 +160,7 @@ public sealed class DnsService : BackgroundService
         }
         finally
         {
-            _semaphore.Release();
+            _queueSemaphore.Release();
         }
     }
 }
