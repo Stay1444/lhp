@@ -14,7 +14,7 @@ const LoggedOutLayout = () =>  {
         }
     }, [identity.currentUser, navigate])
 
-    if (identity.currentUser != undefined) return (<label>redirecting</label>)
+    if (identity.currentUser != undefined) return (<></>)
     
     return (
         <div className={style.parent}>

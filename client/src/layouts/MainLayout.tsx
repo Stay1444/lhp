@@ -3,6 +3,8 @@ import style from "./MainLayout.module.sass"
 import { Outlet, useNavigate } from "react-router";
 import Sidebar from "../components/Sidebar";
 import LanguageSwitcher from "../components/LanguageSwitcher";
+import UserManager from "../components/UserManager";
+
 import { useContext, useEffect } from "react";
 import { IdentityContext } from "../context/IdentityContext";
 
@@ -16,11 +18,14 @@ const MainLayout = () =>  {
         }
     }, [identity.currentUser, navigate])
 
-    if (identity.currentUser == undefined) return (<label>redirecting</label>)
+    if (identity.currentUser == undefined) return (<></>)
 
     return (
         <div className={style.parent}>
             <div className={style.sidebarContainer}>
+                <div className={style.userManager}>
+                    <UserManager/>
+                </div>
                 <div className={style.sidebar}>
                     <Sidebar/>
                 </div>

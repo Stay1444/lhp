@@ -22,7 +22,9 @@ type IdentityContextProviderProps = PropsWithChildren<unknown>;
 
 export const IdentityContextProvider = (props: IdentityContextProviderProps) => {
     const logoutHandler = () => {
-        return;
+        ControllerOptions.Authorization = undefined;
+        localStorage.removeItem("authorization");
+        setState((prev) => ({ ...prev, currentUser: undefined}))
     }
 
     const loginHandler = (token: string) => {

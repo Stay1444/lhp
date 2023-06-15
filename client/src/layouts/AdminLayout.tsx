@@ -17,7 +17,7 @@ const AdminLayout = () =>  {
         }
     }, [identity.currentUser, navigate])
 
-    if (identity.currentUser != undefined && !identity.currentUser.admin) return (<label>redirecting</label>)
+    if (identity.currentUser != undefined && !identity.currentUser.admin) return (<></>)
     
     return (
         <Outlet/>
