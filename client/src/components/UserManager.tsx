@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react"
+import { useContext, useState } from "react"
 import style from "./UserManager.module.sass"
 import { IdentityContext } from "../context/IdentityContext";
 import Button from "./Button";
